@@ -24,7 +24,7 @@ public class Producto
 
 }
 
-public class VistaTipoProductos
+public class VistaProductos
 {
     public int ProductoID { get; set; }
     public int SubRubroID { get; set; }
@@ -33,7 +33,7 @@ public class VistaTipoProductos
     public decimal Precio { get; set; }
     public string? Descripcion { get; set; }
     public bool? Estado { get; set;}
-    public string? NombreSubRubro { get; set; }
-    public string? NombreMarca { get; set; }
+    public string? SubRubroNombre { get; set; }
+    public string? MarcaNombre { get; set; }
 
 }
