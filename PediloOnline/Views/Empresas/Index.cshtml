@@ -2,3 +2,105 @@
   ViewData["Title"] = "Empresas";
 }
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEmpresas">
+  AGREGAR EMPRESA
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalEmpresas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form>
+          <div class="row">
+
+            <input type="hidden" id="empresaID" value="0">
+
+            <div class="mb-3 col-6">
+              <label for="razonSocial" class="form-label">Razon social</label>
+              <input type="text" class="form-control" id="razonSocial" placeholder="Ingrese razon social">
+            </div>
+
+            <div class="mb-3 col-6">
+              <label for="nombreFantasia" class="form-label">Nombre de fantasia</label>
+              <input type="text" class="form-control" id="nombreFantasia" placeholder="Ingrese el nombre de fantasia">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="domicilio" class="form-label">Domicilio</label>
+              <input type="text" class="form-control" id="domicilio" placeholder="Ingrese el domicilio">
+            </div>
+
+            <div class="mb-3 col-6">
+              @* <label for="localidad" class="form-label">Localidad</label> *@
+              <label for="LocalidadID" class="form-label">Localidad</label>
+              @Html.DropDownList("LocalidadID", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="documento" class="form-label">Numero de documento</label>
+              <input type="text" class="form-control" id="documento" placeholder="Ingrese el Nº de docimento">
+            </div>
+
+            <div class="mb-3 col-6">
+              <label for="telefono" class="form-label">Telefono</label>
+              <input type="text" class="form-control" id="telefono" placeholder="Ingrese el telefono">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="Ingrese el Email">
+            </div>
+
+            <div class="mb-3 col-6">
+              <label for="usuarioTitular" class="form-label">Usuario titular</label>
+              <input type="text" class="form-control" id="usuarioTitular" placeholder="Ingrese el usuario titular">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="AgregarEmpresa()">GUARDAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">RAZON SOCIAL</th>
+      <th scope="col">NOMBRE EMPRESA</th>
+      <th scope="col">LOCALIDAD</th>
+      <th scope="col">DNI</th>
+      <th scope="col">TE</th>
+      <th scope="col">EMAIL</th>
+      <th scope="col">NOMBRE TITULAR</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody id="tbody-tablaEmpresa">
+    
+  </tbody>
+</table>
+
+
+ @section Scripts{
+  <script src="~/js/empresas-1.0.0.js"></script>
+}
