@@ -1,0 +1,125 @@
+﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a {
+  color: #fff;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+/* Estilo del menú lateral */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #343a40;
+  position: fixed;
+  left: 0;
+  top: 0;
+  transition: left 0.3s;
+  z-index: 1000;
+  margin: 0; 
+  padding: 0;
+}
+
+/* Estilo del contenedor del encabezado de la sidebar */
+.sidebar-header {
+  background-color: #5c9cdf; /* Cambia este color al que prefieras */
+  padding: 16px;
+  text-align: center;
+}
+
+/* Estilo del título dentro del contenedor del encabezado */
+.sidebar-header h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #fff; /* Asegura que el texto sea visible */
+}
+
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar.closed {
+  left: -250px;
+}
+
+
+/* Estilo del botón de toggle */
+.menu-toggle {
+  position: fixed;
+  top: 10px;
+  left: 265px;
+  background-color: #5c9cdf;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1100;
+  transition: left 0.3s;
+}
+
+.menu-toggle.closed {
+  left: 15px;
+}
+
+/* Estilo de la pantalla principal */
+.main-content {
+  margin-left: 250px;
+  transition: margin-left 0.3s;
+}
+
+.main-content.expanded {
+  margin-left: 0;
+}
+
+/* Estilo para la navbar */
+.navbar {
+  margin-left: 250px;
+  transition: margin-left 0.3s, width 0.3s;
+}
+
+.navbar.expanded {
+  margin-left: 0;
+  width: 100%;
+}

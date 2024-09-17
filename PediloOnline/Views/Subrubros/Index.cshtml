@@ -1,0 +1,73 @@
+@{
+  ViewData["Title"] = "Subrubros";
+}
+
+<!-- Modal Subrubros -->
+<div class="modal fade" id="ModalSubRubros" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="tituloModal">NUEVO SUBRUBRO</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="hidden" id="subRubroID" value="0" />
+          <div class="row">
+            <div class="mb-3 col-12">
+              <label for="subrubroNombre" class="form-label">SUBRUBRO</label>
+              <input type="text" class="form-control" id="subrubroNombre" placeholder="INGRESE EL NOMBRE DEL SUBRUBRO">
+            </div>
+
+            <div class="mb-3 col-12">
+              <label for="RubroID" class="form-label">RUBROS</label>
+              @Html.DropDownList("RubroID", (IEnumerable<SelectListItem>)ViewBag.Rubro, "Seleccione Rubro", new{@class ="form-control"})
+            </div>
+         </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="CargarSubrubro()">GUARAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Barra de busqueda subrubro-->
+<div class="input-group rounded">
+  <input id="subRubroBuscar" type="search" class="form-control rounded" placeholder="BUSCAR SUBRUBRO" aria-label="Search" aria-describedby="search-addon" />
+  <span class="input-group-text border-0" id="search-addon">
+    <i class="fas fa-search"></i>
+  </span>
+</div>
+
+<!--Tabla Subrubro-->
+<table class="table">
+  <thead>
+    <tr>
+      <th>Rubro</th>
+      <th>Subrubro</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody id="tbody-subrubro">
+
+  </tbody>
+</table>
+
+
+<!--Boton para agregar nuevo subrubro-->
+<div class="d-flex justify-content-end align-items-center bd-highlight mb-2 fixed-bottom div-boton ">
+  <div class="p-2 bd-highlight d-flex ">
+    <button type="submit" class="btn btn-primary mt-3 botonsubRubro" data-bs-toggle="modal"
+      data-bs-target="#ModalSubRubros"><i class="material-icons text-center">add</i>
+    </button>
+  </div>
+</div>
+
+@section Scripts {
+  <script src="~/js/subrubros.js"></script>
+}

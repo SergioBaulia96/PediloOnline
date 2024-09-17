@@ -1,0 +1,74 @@
+﻿@{
+  ViewData["Title"] = "Home Page";
+}
+
+<link rel="stylesheet" href="~/css/Inicio.css" asp-append-version="true" />
+
+
+<!-- Contenedor Principal -->
+<div class="container">
+  <h2>INICIO</h2>
+  <div class="card main-card">
+    <h4>Accesos Rápidos</h4>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4 mb-4 col-sm-12">
+          <div class="card custom-card d-flex align-items-center">
+            <div class="card-body text-center">
+              <a href="@Url.Action("Index", "Localidades")" class="text-decoration-none d-block text-gray">
+                <i class="fas fa-city fa-3x mb-3"></i>
+                <h5 class="titulo-card mt-2">Localidades</h5>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4 col-sm-12">
+          <div class="card custom-card d-flex align-items-center">
+            <div class="card-body text-center">
+              <a href="@Url.Action("Clientes", "Clientes")" class="text-decoration-none d-block text-gray">
+                <i class="fa fa-users fa-3x mb-3"></i>
+                <h5 class="titulo-card mt-2">Clientes</h5>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4 col-sm-12">
+          <div class="card custom-card d-flex align-items-center">
+            <div class="card-body text-center">
+              <a href="@Url.Action("Index", "Productos")" class="text-decoration-none d-block text-gray">
+                <i class="fa fa-cart-plus fa-3x mb-3"></i>
+                <h5 class="titulo-card mt-2">Productos</h5>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 mb-4 col-sm-12">
+          <div class="card custom-card d-flex align-items-center">
+            <div class="card-body text-center">
+              <a href="@Url.Action("Index", "Rubros")" class="text-decoration-none d-block text-gray">
+                <i class="fa fa-cog fa-3x mb-3"></i>
+                <h5 class="titulo-card mt-2">Rubros</h5>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4 col-sm-12">
+          <div class="card custom-card d-flex align-items-center">
+            <div class="card-body text-center">
+              <a href="@Url.Action("Index", "SubRubros")" class="text-decoration-none d-block text-gray">
+                <i class="fa fa-cogs fa-3x mb-3"></i>
+                <h5 class="titulo-card mt-2">SubRubros</h5>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

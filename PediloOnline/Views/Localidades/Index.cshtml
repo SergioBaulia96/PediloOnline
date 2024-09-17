@@ -1,0 +1,63 @@
+@{
+    ViewData["Title"] = "Localidades";
+}
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#localidadModal" onclick="NuevaLocalidad()">
+    Nueva Localidad
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="localidadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModal"></h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="LocalidadID" value="0">
+
+                    <label for="LocalidadNombre" class="form-label">Localidad</label>
+                    <input type="text" id="LocalidadNombre" class="form-control">
+
+                    <label for="CodigoPostal" class="form-label">Codigo Postal</label>
+                    <input type="number" id="CodigoPostal" class="form-control">
+
+                    <label for="ProvinciaID" class="form-label">Provincia</label>
+                    @Html.DropDownList("ProvinciaID", null, htmlAttributes: new { @class = "form-control" })
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="LimpiarModal()">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="GuardarLocalidad()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<table class="table table-light table-hover">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Codigo Postal</th>
+            <th>Provincia</th>
+            <th style="width: 70px"></th>
+            <th style="width: 70px"></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-localidades">
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
+</div>
+  
+
+
+
+  @section Scripts{
+  <script src="~/js/localidades-1.0.0.js"></script>
+}

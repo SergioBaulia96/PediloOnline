@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"] = "Marcas";
+}
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#marcaModal" onclick="NuevaMarca()">
+    Nueva Marca
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="marcaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModal"></h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="MarcaID" value="0">
+
+                    <label for="MarcaNombre" class="form-label">Marcas</label>
+                    <input type="text" id="MarcaNombre" class="form-control">
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="LimpiarModal()">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="GuardarMarca()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<table class="table table-light table-hover">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th style="width: 70px"></th>
+            <th style="width: 70px"></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-marcas">
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
+</div>
+  
+
+
+
+  @section Scripts{
+  <script src="~/js/marcas-1.0.0.js"></script>
+}

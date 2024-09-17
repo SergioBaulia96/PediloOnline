@@ -1,0 +1,31 @@
+.custom-card {
+    background-color: #f8f9fa; /* Fondo gris claro */
+    border-radius: 0.5rem; /* Border-radius estándar de Bootstrap */
+  }
+
+.titulo-card{
+    font-size: 1.5rem;
+}
+
+.subtitulo-card{
+    font-size: 0.9rem;
+    color: rgb(230, 212, 212);
+    font-style: Normal weight;
+}
+
+.text-gray {
+    color: #6c757d; /* Color gris */
+}
+
+.text-gray:hover {
+    color: #313437; /* Color al pasar el ratón, opcional */
+}
+
+.main-card {
+    border: 1px solid #ddd; 
+    border-top: 5px solid #1f50c2; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    padding: 10px; 
+    background-color: #fff; 
+  }
