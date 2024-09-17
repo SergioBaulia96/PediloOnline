@@ -2,16 +2,15 @@
     ViewData["Title"] = "Localidades";
 }
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#localidadModal" onclick="NuevaLocalidad()">
-    Nueva Localidad
-</button>
+<link rel="stylesheet" href="~/css/localidades.css" asp-append-version="true" />
+
 
 <!-- Modal -->
 <div class="modal fade" id="localidadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="tituloModal"></h5>
+                <h5 class="modal-title" id="tituloModal">Nueva Localidad</h5>
             </div>
             <div class="modal-body">
                 <form>
@@ -28,9 +27,9 @@
 
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="LimpiarModal()">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="GuardarLocalidad()">Guardar</button>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn-ovalo ancho-boton" data-bs-dismiss="modal" onclick="LimpiarModal()">Cerrar</button>
+                <button type="button" class="btn-ovalo ancho-boton" onclick="GuardarLocalidad()">Guardar</button>
             </div>
         </div>
     </div>
@@ -55,7 +54,12 @@
   </div>
 </div>
   
-
+<!--Boton para agregar nueva localidad-->
+<div class="d-flex justify-content-end align-items-center bd-highlight mb-2 fixed-bottom div-boton ">
+  <div class="p-2 bd-highlight d-flex "><button type="submit" class="btn btn-primary mt-3 botonLocalidad"
+      data-bs-toggle="modal" data-bs-target="#localidadModal"><i class="fa-solid fa-plus">add</i></button>
+  </div>
+</div>
 
 
   @section Scripts{

@@ -1,4 +1,4 @@
-.botonRubro  {
+.botonLocalidad {
     width: 70px;
     height: 70px;
     border-radius: 50%;
@@ -6,9 +6,9 @@
     color: white;
     font-size: 24px;
     cursor: pointer;
-  }
-  
-  .div-boton {
+}
+
+.div-boton {
     bottom: 35px;
     left: 50px;
     right: 20px;
@@ -31,4 +31,3 @@
   .ancho-boton {
     min-width: 150px;
   }
-  
