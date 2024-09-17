@@ -1,24 +1,22 @@
-using Microsoft.AspNetCore.Mvc;
 using PediloOnline.Data;
+using Microsoft.AspNetCore.Mvc;
 using PediloOnline.Models;
 
 namespace PediloOnline.Controllers;
 
-public class MarcasCotroller : Controller
+public class MarcasController : Controller
 {
     private ApplicationDbContext _context;
-
-    public MarcasCotroller(ApplicationDbContext context)
+    public MarcasController(ApplicationDbContext context)
     {
         _context = context;
     }
-
-    public IActionResult Marcas()
+    public IActionResult Index()
     {
         return View();
     }
 
-    public JsonResult ListadoMarcas ( int? marcaID)
+     public JsonResult ListadoMarcas ( int? marcaID)
     {
         var listadoMarcas = _context.Marcas.ToList();
             listadoMarcas = _context.Marcas.OrderBy(l => l.MarcaNombre).ToList();
@@ -68,5 +66,7 @@ public class MarcasCotroller : Controller
         _context.SaveChanges();
 
         return Json(eliminarMarca);
-    }
+    } 
+
+
 }
