@@ -30,10 +30,10 @@
                     @Html.DropDownList("SubRubroID", null, htmlAttributes: new { @class = "form-control" })
 
                     <label for="NombreProducto" class="form-label">Nombre</label>
-                    <input type="text" id="NombreProducto" class="form-control">
+                    <input type="text" id="NombreProducto" class="form-control" oninput="textoMayuscula(this)"> <!--llama a la funcion que convierte lo que escribo en los input a mayuscula-->
 
                     <label for="Descripcion" class="form-label">Descripcion</label>
-                    <input type="text" id="Descripcion" class="form-control">
+                    <input type="text" id="Descripcion" class="form-control" oninput="textoMayuscula(this)">
 
                     <label for="Precio" class="form-label">Precio</label>
                     <input type="number" id="Precio" class="form-control">

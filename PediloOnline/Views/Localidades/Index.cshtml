@@ -17,7 +17,7 @@
                     <input type="hidden" id="LocalidadID" value="0">
 
                     <label for="LocalidadNombre" class="form-label">Localidad</label>
-                    <input type="text" id="LocalidadNombre" class="form-control">
+                    <input type="text" id="LocalidadNombre" class="form-control" oninput="textoMayuscula(this)"> <!--llama a la funcion que convierte lo que escribo en los input a mayuscula-->
 
                     <label for="CodigoPostal" class="form-label">Codigo Postal</label>
                     <input type="number" id="CodigoPostal" class="form-control">

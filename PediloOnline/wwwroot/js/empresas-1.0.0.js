@@ -1,5 +1,6 @@
 window.onload = ListadoEmpresas();
 
+
 function ListadoEmpresas() {
   $.ajax({
     url: "../../Empresas/ListadoEmpresas",
@@ -78,4 +79,8 @@ function AgregarEmpresa() {
       console.log("Disculpe, existió un problema al guardar el registro");
     },
   });
+}
+
+function textoMayuscula(texto) {
+  texto.value = texto.value.toUpperCase();
 }

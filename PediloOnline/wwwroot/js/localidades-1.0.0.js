@@ -137,3 +137,8 @@ function ValidarEliminacion(localidadID)
   {
     $("#tituloModal").text("Nueva Localidad");
   }
+
+//funcion que convierte lo que escribo en los input a mayuscula
+function textoMayuscula(texto) {
+    texto.value = texto.value.toUpperCase();
+  }
