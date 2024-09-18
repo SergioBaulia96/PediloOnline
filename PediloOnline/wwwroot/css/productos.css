@@ -1,0 +1,33 @@
+.botonProducto {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.div-boton {
+    bottom: 35px;
+    left: 50px;
+    right: 20px;
+  }
+
+  .btn-ovalo {
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    background-color: transparent;
+    border: 2px solid #073fe6;
+    border-radius: 30px;
+    color: #073fe6;
+    padding: 5px 18px 4px 18px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .ancho-boton {
+    min-width: 150px;
+  }

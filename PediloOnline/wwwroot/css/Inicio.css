@@ -1,6 +1,9 @@
 .custom-card {
     background-color: #f8f9fa; /* Fondo gris claro */
     border-radius: 0.5rem; /* Border-radius estándar de Bootstrap */
+    margin: 0; /* Elimina el margen entre las tarjetas */
+    padding: 15px; /* Añade un padding interno */
+    box-sizing: border-box; /* Asegura que el padding no aumente el tamaño */
   }
 
 .titulo-card{

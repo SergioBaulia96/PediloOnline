@@ -105,8 +105,11 @@ button.accept-policy {
 
 /* Estilo de la pantalla principal */
 .main-content {
-  margin-left: 250px;
   transition: margin-left 0.3s;
+  margin-left: 250px; /* El margen que permite que no se superponga al sidebar */
+  padding: 20px; /* Añade padding interno */
+  max-width: calc(100% - 250px); /* Limita el ancho máximo */
+  box-sizing: border-box; /* Asegura que el padding no sume al ancho */
 }
 
 .main-content.expanded {
