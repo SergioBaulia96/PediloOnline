@@ -2,21 +2,19 @@
     ViewData["Title"] = "Productos";
 }
 
+<link rel="stylesheet" href="~/css/productos.css" asp-append-version="true" />
+
 <div class="text-center">
-    <h1 class="display-4">Lista de Productos</h1>
+    <h1 class="display-4">Productos</h1>
 </div>
 
-
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productoModal" onclick="NuevoProducto()">
-    Nuevo Producto
-</button>
 
 <!-- Modal -->
 <div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="tituloModal"></h5>
+                <h5 class="modal-title" id="tituloModal">Nuevo Producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -41,14 +39,14 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="LimpiarModal()">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="GuardarProducto()">Guardar</button>
+                <button type="button" class="btn-ovalo ancho-boton" data-bs-dismiss="modal" onclick="LimpiarModal()">Cerrar</button>
+                <button type="button" class="btn-ovalo ancho-boton" onclick="GuardarProducto()">Guardar</button>
             </div>
         </div>
     </div>
 </div>
 
-<table class="table table-dark table-striped">
+<table class="table table-light table-hover">
     <thead>
         <tr>
             <th>Producto</th>
@@ -62,6 +60,13 @@
     </thead>
     <tbody id="tbody-productos"></tbody>
 </table>
+
+<!--Boton para agregar nuevo producto-->
+<div class="d-flex justify-content-end align-items-center bd-highlight mb-2 fixed-bottom div-boton ">
+  <div class="p-2 bd-highlight d-flex "><button type="submit" class="btn btn-primary mt-3 botonProducto"
+      data-bs-toggle="modal" data-bs-target="#productoModal"><i class="fa-solid fa-plus">add</i></button>
+  </div>
+</div>
 
 @section Scripts {
     <script src="~/js/productos-1.0.0.js"></script>
