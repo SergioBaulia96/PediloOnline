@@ -32,7 +32,7 @@ public enum TipoCliente
 
 public class VistaCliente
 {
-        public int ClienteID { get; set; }
+    public int ClienteID { get; set; }
     public int LocalidadID { get; set; }
     public string? LocalidadNombre { get; set;}
     public string? NombreCompleto { get; set; }
