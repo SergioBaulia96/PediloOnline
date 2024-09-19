@@ -36,21 +36,42 @@
                         <div class="col-md-6">
                             <label for="TipoCliente" class="form-label">Tipo Cliente</label>
                             @Html.DropDownList("TipoCliente", null, htmlAttributes: new { @class = "form-control" })
+                            <span id="errorMensajeTipoCliente"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un tipo de cliente
+                            </span>
                         </div>
                         <div class="col-md-6">
                             <label for="LocalidadID" class="form-label">Localidad</label>
                             @Html.DropDownList("LocalidadID", null, htmlAttributes: new { @class = "form-control" })
+                            <span id="errorMensajeLocalidad"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar una localidad
+                            </span>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-12">
                             <label for="NombreCompleto" class="form-label">Nombre Completo</label>
-                            <input type="text" id="NombreCompleto" class="form-control" oninput="textoMayuscula(this)"> <!--llama a la funcion que convierte lo que escribo en los input a mayuscula-->
+                            <input type="text" id="NombreCompleto" class="form-control" oninput="textoMayuscula(this)">
+                            <!--llama a la funcion que convierte lo que escribo en los input a mayuscula-->
+                            <span id="errorMensajeNombre"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un nombre
+                            </span>
                         </div>
                         <div class="col-md-12">
                             <label for="Domicilio" class="form-label">Domicilio</label>
                             <input type="text" id="Domicilio" class="form-control" oninput="textoMayuscula(this)">
+                            <span id="errorMensajeDomicilio"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un domicilio
+                            </span>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="Email" class="form-label">Email</label>
+                            <input type="text" id="Email" class="form-control" oninput="textoMayuscula(this)">
                         </div>
                     </div>
 
@@ -58,12 +79,20 @@
                         <div class="col-md-6">
                             <label for="Documento" class="form-label">Documento</label>
                             <input type="text" id="Documento" class="form-control">
+                            <span id="errorMensajeDocumento"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un numero de documento
+                            </span>
                         </div>
                         <div class="col-md-6">
                             <label for="Telefono" class="form-label">Telefono</label>
                             <input type="text" id="Telefono" class="form-control">
+                            <span id="errorMensajeTelefono"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un numero de telefono
+                            </span>
                         </div>
-                        </div>
+                    </div>
 
 
                 </form>
