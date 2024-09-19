@@ -31,3 +31,7 @@
   .ancho-boton {
     min-width: 150px;
   }
+
+  .modal-header{
+    background-color: rgb(234, 234, 234);
+  }
