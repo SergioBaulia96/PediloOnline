@@ -89,7 +89,7 @@ public class EmpresasController: Controller {
             
             if(editarEmpresa != null)
             {
-                editarEmpresa.EmpresaID = empresaID;
+                /* editarEmpresa.EmpresaID = empresaID; */
                 editarEmpresa.RazonSocial = razonSocial;
                 editarEmpresa.NombreFantasia = nombreFantasia;
                 editarEmpresa.NroTipoDocumento = documento;
@@ -105,4 +105,22 @@ public class EmpresasController: Controller {
         return Json(resultado);
     }
 
+    public JsonResult TraerEmpresasaModal(int? empresaID) 
+    {
+        var empresaPorID = _context.Empresas.ToList();
+        if (empresaID != null)
+        {
+            empresaPorID = empresaPorID.Where(e => e.EmpresaID == empresaID).ToList();
+        }
+
+        return Json(empresaPorID.ToList());
+    }
+
+
+    public JsonResult EliminarEmpresa( int empresaID) {
+        var empresa = _context.Empresas.Find(empresaID);
+        _context.Remove(empresa);
+        _context.SaveChanges();
+        return Json (true);
+    }
 }
