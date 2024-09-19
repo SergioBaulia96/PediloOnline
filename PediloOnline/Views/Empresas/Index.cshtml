@@ -6,7 +6,7 @@
 
 
 <div class="text-center">
-    <h1 class="display-4">Empresas</h1>
+  <h1 class="display-4">Empresas</h1>
 </div>
 
 <!-- Modal -->
@@ -26,25 +26,40 @@
 
             <div class="mb-3 col-6">
               <label for="razonSocial" class="form-label">Razon social</label>
-              <input type="text" class="form-control" id="razonSocial" placeholder="Ingrese razon social" oninput="textoMayuscula(this)">
+              <input type="text" class="form-control" id="razonSocial" placeholder="Ingrese razon social"
+                oninput="textoMayuscula(this)">
+              <span id="errorMensajeRazonSocial" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar una razon social
+              </span>
             </div>
 
             <div class="mb-3 col-6">
               <label for="nombreFantasia" class="form-label">Nombre de fantasia</label>
-              <input type="text" class="form-control" id="nombreFantasia" placeholder="Ingrese el nombre de fantasia" oninput="textoMayuscula(this)">
+              <input type="text" class="form-control" id="nombreFantasia" placeholder="Ingrese el nombre de fantasia"
+                oninput="textoMayuscula(this)">
+              <span id="errorMensajeNombreFantasia" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un nombre de fantasia
+              </span>
             </div>
           </div>
 
           <div class="row">
             <div class="mb-3 col-6">
               <label for="domicilio" class="form-label">Domicilio</label>
-              <input type="text" class="form-control" id="domicilio" placeholder="Ingrese el domicilio" oninput="textoMayuscula(this)">
+              <input type="text" class="form-control" id="domicilio" placeholder="Ingrese el domicilio"
+                oninput="textoMayuscula(this)">
+              <span id="errorMensajeDomicilio" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un domicilio
+              </span>
             </div>
 
             <div class="mb-3 col-6">
               @* <label for="localidad" class="form-label">Localidad</label> *@
               <label for="LocalidadID" class="form-label">Localidad</label>
               @Html.DropDownList("LocalidadID", null, htmlAttributes: new { @class = "form-control" })
+              <span id="errorMensajeLocalidad" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe seleccionar una localidad
+              </span>
             </div>
           </div>
 
@@ -52,50 +67,65 @@
             <div class="mb-3 col-6">
               <label for="documento" class="form-label">Numero de documento</label>
               <input type="text" class="form-control" id="documento" placeholder="Ingrese el Nº de docimento">
+              <span id="errorMensajeDocumento" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un numero de documento
+              </span>
             </div>
 
             <div class="mb-3 col-6">
               <label for="telefono" class="form-label">Telefono</label>
               <input type="text" class="form-control" id="telefono" placeholder="Ingrese el telefono">
+              <span id="errorMensajeTelefono" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un numero de telefono
+              </span>
             </div>
           </div>
 
           <div class="row">
             <div class="mb-3 col-6">
               <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="Ingrese el Email" oninput="textoMayuscula(this)">
+              <input type="email" class="form-control" id="email" placeholder="Ingrese el Email"
+                oninput="textoMayuscula(this)">
+              <span id="errorMensajeEmail" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un email
+              </span>
             </div>
 
             <div class="mb-3 col-6">
               <label for="usuarioTitular" class="form-label">Usuario titular</label>
-              <input type="text" class="form-control" id="usuarioTitular" placeholder="Ingrese el usuario titular" oninput="textoMayuscula(this)">
+              <input type="text" class="form-control" id="usuarioTitular" placeholder="Ingrese el usuario titular"
+                oninput="textoMayuscula(this)">
+              <span id="errorMensajeUsuarioTitular" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un usuario titular
+              </span>
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn-ovalo ancho-boton" data-bs-dismiss="modal">CANCELAR</button>
-        <button type="button" class="btn-ovalo ancho-boton" data-bs-dismiss="modal" onclick="AgregarEmpresa()">GUARDAR</button>
+        <button type="button" class="btn-ovalo ancho-boton" data-bs-dismiss="modal"
+          onclick="AgregarEmpresa()">GUARDAR</button>
       </div>
     </div>
   </div>
 </div>
 
 <table class="table table-light table-hover">
-    <thead>
-        <tr>
-            <th>Razón Social</th>
-            <th>Nombre Empresa</th>
-            <th>Localidad</th>
-            <th>DNI</th>
-            <th>Teléfono</th>            
-            <th>Email</th>
-            <th>Nombre Titular</th>
-        </tr>
-    </thead>
+  <thead>
+    <tr>
+      <th>Razón Social</th>
+      <th>Nombre Empresa</th>
+      <th>Localidad</th>
+      <th>DNI</th>
+      <th>Teléfono</th>
+      <th>Email</th>
+      <th>Nombre Titular</th>
+    </tr>
+  </thead>
 
   <tbody id="tbody-tablaEmpresa">
-    
+
   </tbody>
 </table>
 
@@ -107,6 +137,6 @@
   </div>
 </div>
 
- @section Scripts{
+@section Scripts {
   <script src="~/js/empresas-1.0.0.js"></script>
 }

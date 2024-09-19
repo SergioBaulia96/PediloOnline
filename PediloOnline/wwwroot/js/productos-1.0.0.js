@@ -1,19 +1,19 @@
 window.onload = ListadoProductos();
 
-function ListadoProductos(){
+function ListadoProductos() {
 
     $.ajax({
         url: '../../Productos/ListadoProductos',
         data: {},
         type: 'POST',
         datatype: 'json',
-        success: function(productosMostrar){
+        success: function (productosMostrar) {
             $("#productoModal").modal("hide");
             LimpiarModal();
             //console.log("Ejecuta funcion limpiar modal")
             let contenidoTabla = ``;
 
-            $.each(productosMostrar, function(index, productoMostrar){
+            $.each(productosMostrar, function (index, productoMostrar) {
 
                 contenidoTabla += `
                 <tr>
@@ -34,40 +34,89 @@ function ListadoProductos(){
                     </td>
                 </tr>
                 `;
-                
+
             });
             document.getElementById("tbody-productos").innerHTML = contenidoTabla;
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             alert('Disculpe, existio un problema al deshabilitar');
         }
     });
 }
 
-    function LimpiarModal(){
-        document.getElementById("ProductoID").value = 0 ;
-        document.getElementById("MarcaID").value = 0;
-        document.getElementById("SubRubroID").value = 0;
-        document.getElementById("NombreProducto").value = "";
-        document.getElementById("Descripcion").value = "";
-        document.getElementById("Precio").value = "";
+function LimpiarModal() {
+    document.getElementById("ProductoID").value = 0;
+    document.getElementById("MarcaID").value = 0;
+    document.getElementById("SubRubroID").value = 0;
+    document.getElementById("NombreProducto").value = "";
+    document.getElementById("Descripcion").value = "";
+    document.getElementById("Precio").value = "";
+    document.getElementById("errorMensajeMarca").style.display = "none";
+    document.getElementById("errorMensajeSubRubro").style.display = "none";
+    document.getElementById("errorMensajeNombreProducto").style.display = "none";
+    document.getElementById("errorMensajeDescripcion").style.display = "none";
+    document.getElementById("errorMensajePrecio").style.display = "none";
+    document.getElementById("errorMensajeEmail").style.display = "none";
+}
+
+function NuevoProducto() {
+    $("#tituloModal").text("Nuevo Producto");
+}
+
+function GuardarProducto() {
+    let productoID = document.getElementById("ProductoID").value;
+    let marcaID = document.getElementById("MarcaID").value;
+    let subRubroID = document.getElementById("SubRubroID").value;
+    let nombreProducto = document.getElementById("NombreProducto").value;
+    let descripcion = document.getElementById("Descripcion").value;
+    let precio = document.getElementById("Precio").value;
+
+    let isValid = true;
+
+    if (marcaID === "0") {
+        document.getElementById("errorMensajeMarca").style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("errorMensajeMarca").style.display = "none";
     }
 
-    function NuevoProducto(){
-        $("#tituloModal").text("Nuevo Producto");
+    if (subRubroID === "0") {
+        document.getElementById("errorMensajeSubRubro").style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("errorMensajeSubRubro").style.display = "none";
     }
 
-    function GuardarProducto(){
-        let productoID = document.getElementById("ProductoID").value;
-        let marcaID = document.getElementById("MarcaID").value;
-        let subRubroID = document.getElementById("SubRubroID").value;
-        let nombreProducto = document.getElementById("NombreProducto").value;
-        let descripcion = document.getElementById("Descripcion").value;
-        let precio = document.getElementById("Precio").value;
+    if (nombreProducto === "") {
+        document.getElementById("errorMensajeNombreProducto").style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("errorMensajeNombreProducto").style.display = "none";
+    }
 
-        $.ajax({
-            url: '../../Productos/GuardarProducto',
-        data: { ProductoID: productoID,
+    if (descripcion === "") {
+        document.getElementById("errorMensajeDescripcion").style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("errorMensajeDescripcion").style.display = "none";
+    }
+
+    if (precio === "0") {
+        document.getElementById("errorMensajePrecio").style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("errorMensajePrecio").style.display = "none";
+    }
+
+    if (!isValid) {
+        return;  // Detener la ejecución aquí si isValid es false
+      }
+
+
+    $.ajax({
+        url: '../../Productos/GuardarProducto',
+        data: {
+            ProductoID: productoID,
             MarcaID: marcaID,
             SubRubroID: subRubroID,
             NombreProducto: nombreProducto,
@@ -77,7 +126,7 @@ function ListadoProductos(){
         type: 'POST',
         datatype: 'json',
         success: function (resultado) {
-            if(resultado != ""){
+            if (resultado != "") {
                 alert(resultado);
             }
             ListadoProductos();
@@ -89,57 +138,55 @@ function ListadoProductos(){
 }
 
 
-function AbrirEditarProducto(ProductoID){
+function AbrirEditarProducto(ProductoID) {
     $.ajax({
-        url:'../../Productos/TraerProductosAlModal',
-        data: {ProductoID: ProductoID},
+        url: '../../Productos/TraerProductosAlModal',
+        data: { ProductoID: ProductoID },
         type: 'POST',
         datatype: 'json',
-        success: function (productoPorID){
+        success: function (productoPorID) {
             let producto = productoPorID[0];
 
             document.getElementById("ProductoID").value = ProductoID;
             $("#tituloModal").text("Editar Producto");
             document.getElementById("MarcaID").value = producto.marcaID,
-            document.getElementById("SubRubroID").value = producto.subRubroID,
-            document.getElementById("NombreProducto").value = producto.nombreProducto,
-            document.getElementById("Descripcion").value = producto.descripcion,
-            document.getElementById("Precio").value = producto.precio,
-            $("#productoModal").modal("show");
+                document.getElementById("SubRubroID").value = producto.subRubroID,
+                document.getElementById("NombreProducto").value = producto.nombreProducto,
+                document.getElementById("Descripcion").value = producto.descripcion,
+                document.getElementById("Precio").value = producto.precio,
+                $("#productoModal").modal("show");
         },
 
-        error: function (xhr, status){
+        error: function (xhr, status) {
             console.log('Disculpe, exitio un problema al editar el Producto.');
         }
     });
 }
 
-function EliminarProducto(productoID){
+function EliminarProducto(productoID) {
     $.ajax({
         url: '../../Productos/EliminarProducto',
         data: { productoID: productoID },
         type: 'POST',
         dataType: 'json',
-        success: function(EliminarProducto){
+        success: function (EliminarProducto) {
             ListadoProductos()
         },
-        error: function(xhr, status){
+        error: function (xhr, status) {
             console.log('Problemas al eliminar el producto');
         }
     });
 }
 
-function ValidarEliminacion(productoID)
-{
+function ValidarEliminacion(productoID) {
     var elimina = confirm("¿Esta seguro que desea eliminar?");
-    if(elimina == true)
-        {
-            EliminarProducto(productoID);
-        }
+    if (elimina == true) {
+        EliminarProducto(productoID);
+    }
 }
 
 //funcion que convierte lo que escribo en los input a mayuscula
 function textoMayuscula(texto) {
     texto.value = texto.value.toUpperCase();
-  }
+}
 

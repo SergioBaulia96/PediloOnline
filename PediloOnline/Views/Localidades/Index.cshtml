@@ -1,64 +1,75 @@
 @{
-    ViewData["Title"] = "Localidades";
+  ViewData["Title"] = "Localidades";
 }
 
 <link rel="stylesheet" href="~/css/localidades.css" asp-append-version="true" />
 
 
 <div class="text-center">
-    <h1 class="display-4">Localidades</h1>
+  <h1 class="display-4">Localidades</h1>
 </div>
 
 
 <!-- Modal -->
 <div class="modal fade" id="localidadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="tituloModal">Nueva Localidad</h5>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <input type="hidden" id="LocalidadID" value="0">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tituloModal">Nueva Localidad</h5>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="hidden" id="LocalidadID" value="0">
 
-                    <label for="LocalidadNombre" class="form-label">Localidad</label>
-                    <input type="text" id="LocalidadNombre" class="form-control" oninput="textoMayuscula(this)"> <!--llama a la funcion que convierte lo que escribo en los input a mayuscula-->
+          <label for="LocalidadNombre" class="form-label">Localidad</label>
+          <input type="text" id="LocalidadNombre" class="form-control" oninput="textoMayuscula(this)">
+          <!--llama a la funcion que convierte lo que escribo en los input a mayuscula-->
+          <span id="errorMensajeLocalidadNombre" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+            <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar una localidad
+          </span>
 
-                    <label for="CodigoPostal" class="form-label">Codigo Postal</label>
-                    <input type="number" id="CodigoPostal" class="form-control">
+          <label for="CodigoPostal" class="form-label">Codigo Postal</label>
+          <input type="number" id="CodigoPostal" class="form-control">
+          <span id="errorMensajeCodigoPostal" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+            <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un numero de codigo postal
+          </span>
 
-                    <label for="ProvinciaID" class="form-label">Provincia</label>
-                    @Html.DropDownList("ProvinciaID", null, htmlAttributes: new { @class = "form-control" })
+          <label for="ProvinciaID" class="form-label">Provincia</label>
+          @Html.DropDownList("ProvinciaID", null, htmlAttributes: new { @class = "form-control" })
+          <span id="errorMensajeProvincia" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+            <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe seleccionar una provincia
+          </span>
 
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <button type="button" class="btn-ovalo ancho-boton" data-bs-dismiss="modal" onclick="LimpiarModal()">Cerrar</button>
-                <button type="button" class="btn-ovalo ancho-boton" onclick="GuardarLocalidad()">Guardar</button>
-            </div>
-        </div>
+        </form>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn-ovalo ancho-boton" data-bs-dismiss="modal"
+          onclick="LimpiarModal()">Cerrar</button>
+        <button type="button" class="btn-ovalo ancho-boton" onclick="GuardarLocalidad()">Guardar</button>
+      </div>
     </div>
+  </div>
 </div>
 
 
 <table class="table table-light table-hover">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Codigo Postal</th>
-            <th>Provincia</th>
-            <th style="width: 70px"></th>
-            <th style="width: 70px"></th>
-          </tr>
-        </thead>
-        <tbody id="tbody-localidades">
-        </tbody>
-      </table>
-    </div>
-    </div>
-  </div>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Codigo Postal</th>
+      <th>Provincia</th>
+      <th style="width: 70px"></th>
+      <th style="width: 70px"></th>
+    </tr>
+  </thead>
+  <tbody id="tbody-localidades">
+  </tbody>
+</table>
 </div>
-  
+</div>
+</div>
+</div>
+
 <!--Boton para agregar nueva localidad-->
 <div class="d-flex justify-content-end align-items-center bd-highlight mb-2 fixed-bottom div-boton ">
   <div class="p-2 bd-highlight d-flex "><button type="submit" class="btn btn-primary mt-3 botonLocalidad"
@@ -67,6 +78,6 @@
 </div>
 
 
-  @section Scripts{
+@section Scripts {
   <script src="~/js/localidades-1.0.0.js"></script>
 }

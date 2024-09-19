@@ -1,9 +1,5 @@
-window.onload = Funciona();
 window.onload = ListaSubrubros();
 
-function Funciona () {
-    console.log("Funciona");
-}
 
 function ListaSubrubros(){
     $.ajax({
@@ -13,7 +9,8 @@ function ListaSubrubros(){
         type: 'POST',
         dataType: 'json',
         success: function (subrubrosMostar) {
-            /*  LimpiarInput(); */
+          $("#ModalSubRubros").modal("hide");
+          LimpiarModal();
             let contenidoTabla = ``;
 
             $.each(subrubrosMostar, function (index, subrubro) {  
@@ -53,6 +50,27 @@ function CargarSubrubro() {
     let rubroID = document.getElementById("RubroID").value;
     let subrubroId = document.getElementById("subRubroID").value;
     let subrubroNombre = document.getElementById("subrubroNombre").value;
+
+    let isValid = true;
+
+  if (subrubroNombre === "") {
+    document.getElementById("errorMensajeNombre").style.display = "block";
+    isValid = false;
+  } else {
+    document.getElementById("errorMensajeNombre").style.display = "none";
+  }
+
+  if (rubroID === "") {
+    document.getElementById("errorMensajeRubro").style.display = "block";
+    isValid = false;
+  } else {
+    document.getElementById("errorMensajeRubro").style.display = "none";
+  }
+
+  if (!isValid) {
+    return;  
+  }
+
   
     $.ajax({
       url: "../../Subrubros/GuardarsubRubro",
@@ -79,6 +97,15 @@ function CargarSubrubro() {
       EliminarSubrubro(subRubroID);
     }
 
+  }
+
+  function LimpiarModal() {
+    document.getElementById("subRubroID").value = 0;
+    document.getElementById("RubroID").value = 0;
+    document.getElementById("subrubroNombre").value = "";
+    document.getElementById("errorMensajeNombre").style.display = "none";
+    document.getElementById("errorMensajeRubro").style.display = "none";
+  
   }
 
   function EliminarSubrubro(subRubroID) {

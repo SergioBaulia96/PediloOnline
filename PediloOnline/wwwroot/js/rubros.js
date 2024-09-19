@@ -1,9 +1,6 @@
-window.onload = Funciona();
 window.onload = ListadoRubros();
 
-function Funciona() {
-  console.log("Funciona");
-}
+
 
 function ListadoRubros() {
   $.ajax({
@@ -12,6 +9,8 @@ function ListadoRubros() {
     type: "POST",
     dataType: "json",
     success: function (tipoRubro) {
+      $("#ModalRubros").modal("hide");
+      LimpiarModal();
       let contenidoTabla = ``;
 
       $.each(tipoRubro, function (index, rubro) {
@@ -45,6 +44,19 @@ function CargarRubro() {
   let rubroId = document.getElementById("rubroID").value;
   let rubroNombre = document.getElementById("rubroNombre").value;;
 
+  let isValid = true;
+
+  if (rubroNombre === "") {
+    document.getElementById("errorMensajeNombre").style.display = "block";
+    isValid = false;
+  } else {
+    document.getElementById("errorMensajeNombre").style.display = "none";
+  }
+
+  if (!isValid) {
+    return;  // Detener la ejecución aquí si isValid es false
+  }
+
   $.ajax({
     url: "../../Rubros/GuardarRubro",
     data: {
@@ -54,7 +66,6 @@ function CargarRubro() {
     type: "POST",
     dataType: "json",
     success: function (resultado) {
-      /* alert(resultado); */
       ListadoRubros();
     },
     error: function (xhr, status) {
@@ -86,37 +97,44 @@ function CargarRubro() {
 } */
 
 //recien agregado editar rubro
- /*  function ModalEditarRubros(rubroID){
-    
-  $.ajax({
-      url: '../../Rubros/TraerRubrosModal',
-      data: { 
-        rubroId: rubroID,
-      },
-      type: 'POST',
-      dataType: 'json',
-      success: function (rubrosPorID) { 
-          let rubro = rubrosPorID[0];
+/*  function ModalEditarRubros(rubroID){
+   
+ $.ajax({
+     url: '../../Rubros/TraerRubrosModal',
+     data: { 
+       rubroId: rubroID,
+     },
+     type: 'POST',
+     dataType: 'json',
+     success: function (rubrosPorID) { 
+         let rubro = rubrosPorID[0];
 
-          document.getElementById("rubroID").value = rubroID;
-          $("#tituloModal").text("Editar Rubro");
-          document.getElementById("rubroNombre").value = rubro.rubroNombre,
-          
+         document.getElementById("rubroID").value = rubroID;
+         $("#tituloModal").text("Editar Rubro");
+         document.getElementById("rubroNombre").value = rubro.rubroNombre,
+         
 
-          $("#ModalRubros").modal("show");
-      },
+         $("#ModalRubros").modal("show");
+     },
 
-      error: function (xhr, status) {
-          console.log('Disculpe, existió un problema al consultar el registro para ser modificado.');
-      }
-  });
+     error: function (xhr, status) {
+         console.log('Disculpe, existió un problema al consultar el registro para ser modificado.');
+     }
+ });
 }  */
 
-function ValidarEliminar (rubroID) {
-    var confirmacion = confirm("Desea Eliminar rubro");
-    if (confirmacion == true) {
-      EliminarRubro(rubroID);
-    }
+function LimpiarModal() {
+  document.getElementById("rubroID").value = 0;
+  document.getElementById("rubroNombre").value = "";
+  document.getElementById("errorMensajeNombre").style.display = "none";
+
+}
+
+function ValidarEliminar(rubroID) {
+  var confirmacion = confirm("Desea Eliminar rubro");
+  if (confirmacion == true) {
+    EliminarRubro(rubroID);
+  }
 
 }
 
@@ -131,7 +149,7 @@ function EliminarRubro(rubroID) {
     success: function (resultado) {
       alert(resultado);
       ListadoRubros();
-      
+
     },
     error: function (xhr, status) {
       console.log("Disculpe, existió un problema al eliminar el rubro");
@@ -141,26 +159,26 @@ function EliminarRubro(rubroID) {
 
 
 //Funcion para hacer busqueda
-$(document).ready(function() {
-  $('#buscarRubro').on('input', function() {
+$(document).ready(function () {
+  $('#buscarRubro').on('input', function () {
     var buscarRubro = $(this).val();
-    
+
     $.ajax({
-      url: '/Rubros/Buscar', 
+      url: '/Rubros/Buscar',
       type: 'GET',
       data: { buscarRubro: buscarRubro },
-      success: function(data) {
-        
+      success: function (data) {
+
         var tabla = "";
 
-        data.results.forEach(function(result) {
-          tabla += "<div>" + "<p>" + result.rubroNombre +"</p>"  + "</div>";
-          
+        data.results.forEach(function (result) {
+          tabla += "<div>" + "<p>" + result.rubroNombre + "</p>" + "</div>";
+
         });
         $('#results').html(tabla);
-        console.log(results); 
+        console.log(results);
       },
-      error: function(xhr, status, error) {
+      error: function (xhr, status, error) {
         console.log("Error en la búsqueda: " + error);
       }
     });
@@ -169,18 +187,18 @@ $(document).ready(function() {
 
 
 
-$(document).ready(function() {
-  $('#buscarRubro').on('input', function() {
+$(document).ready(function () {
+  $('#buscarRubro').on('input', function () {
     var buscarRubro = $(this).val();
-    
+
     $.ajax({
-      url: '/Rubros/Buscar', 
+      url: '/Rubros/Buscar',
       type: 'GET',
       data: { buscarRubro: buscarRubro },
-      success: function(rubros) {
-        
+      success: function (rubros) {
+
         var tabla1 = "";
-        $.each(rubros, function(index, rubro){
+        $.each(rubros, function (index, rubro) {
           tabla1 += `
             <tr>
                     <td>${rubro.rubroNombre}</td>
@@ -199,7 +217,7 @@ $(document).ready(function() {
           `
         });
         document.getElementById("tbody-rubro1").innerHTML = tabla1;
-        
+
       }
     });
   });

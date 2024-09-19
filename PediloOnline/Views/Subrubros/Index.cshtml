@@ -24,18 +24,24 @@
             <div class="mb-3 col-12">
               <label for="subrubroNombre" class="form-label">SUBRUBRO</label>
               <input type="text" class="form-control" id="subrubroNombre" placeholder="INGRESE EL NOMBRE DEL SUBRUBRO" oninput="textoMayuscula(this)">
+                <span id="errorMensajeNombre" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un nombre
+              </span>
             </div>
 
             <div class="mb-3 col-12">
               <label for="RubroID" class="form-label">RUBROS</label>
               @Html.DropDownList("RubroID", (IEnumerable<SelectListItem>)ViewBag.Rubro, "SELECCIONE RUBRO", new{@class ="form-control"})
+                  <span id="errorMensajeRubro" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe seleccionar un rubro
+              </span>
             </div>
          </div>
         </form>
       </div>
       <div class="modal-footer d-flex justify-content-center">
         <button type="button" class="btn-ovalo ancho-boton" data-bs-dismiss="modal">CANCELAR</button>
-        <button type="button" class="btn-ovalo ancho-boton" data-bs-dismiss="modal" onclick="CargarSubrubro()">GUARDAR</button>
+        <button type="button" class="btn-ovalo ancho-boton" onclick="CargarSubrubro()">GUARDAR</button>
       </div>
     </div>
   </div>

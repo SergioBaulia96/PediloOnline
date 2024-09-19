@@ -3,7 +3,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Rubros</h1>
+  <h1 class="display-4">Rubros</h1>
 </div>
 
 <!-- Modal Rubro-->
@@ -20,14 +20,19 @@
           <div class="row">
             <div class="mb-3 col-12">
               <label for="rubroNombre" class="form-label">NUEVO RUBRO</label>
-              <input type="text" class="form-control" id="rubroNombre" placeholder="INGRESE EL NOMBRE DEL RUBRO" oninput="textoMayuscula(this)">
+              <input type="text" class="form-control" id="rubroNombre" placeholder="INGRESE EL NOMBRE DEL RUBRO"
+                oninput="textoMayuscula(this)">
+              <span id="errorMensajeNombre" style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un nombre
+              </span>
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer d-flex justify-content-center">
         <button type="button" class="btn-ovalo ancho-boton" data-bs-dismiss="modal">CANCELAR</button>
-        <button type="button" class="btn-ovalo ancho-boton"  data-bs-dismiss="modal" onclick="CargarRubro()">GUARDAR</button>
+        <button type="button" class="btn-ovalo ancho-boton" 
+          onclick="CargarRubro()">GUARDAR</button>
       </div>
     </div>
   </div>
@@ -35,7 +40,8 @@
 
 <!--Barra de busqueda rubro-->
 <div class="input-group rounded">
-  <input id="buscarRubro" type="text" class="form-control rounded" placeholder="BUSCAR RUBRO" aria-label="Search" aria-describedby="search-addon" />
+  <input id="buscarRubro" type="text" class="form-control rounded" placeholder="BUSCAR RUBRO" aria-label="Search"
+    aria-describedby="search-addon" />
   <span class="input-group-text border-0" id="search-addon">
     <i class="fas fa-search"></i>
   </span>
@@ -58,17 +64,17 @@
 
 
 @* <table class="table">
-  <thead>
-    <tr>
-      <th>Rubro</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<thead>
+<tr>
+<th>Rubro</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
 
-  <tbody id="tbody-rubro1">
+<tbody id="tbody-rubro1">
 
-  </tbody>
+</tbody>
 </table> *@
 
 

@@ -48,6 +48,29 @@ function GuardarLocalidad(){
     let nombre = document.getElementById("LocalidadNombre").value.trim(); // Elimina espacios en blanco
     let codigoPostal = document.getElementById("CodigoPostal").value; // Elimina espacios en blanco
     let provinciaID = document.getElementById("ProvinciaID").value;
+
+    if (nombre === "") {
+        document.getElementById("errorMensajeLocalidadNombre").style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("errorMensajeLocalidadNombre").style.display = "none";
+    }
+
+    if (codigoPostal === "") {
+        document.getElementById("errorMensajeCodigoPostal").style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("errorMensajeCodigoPostal").style.display = "none";
+    }
+
+    if (provinciaID === "0") {
+        document.getElementById("errorMensajeProvincia").style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("errorMensajeProvincia").style.display = "none";
+    }
+
+
     
     $.ajax({
         url: '../../Localidades/GuardarLocalidad',
@@ -131,6 +154,9 @@ function ValidarEliminacion(localidadID)
         document.getElementById("LocalidadNombre").value = "";
         document.getElementById("CodigoPostal").value = "";
         document.getElementById("ProvinciaID").value = 0;
+        document.getElementById("errorMensajeLocalidadNombre").style.display = "none";
+        document.getElementById("errorMensajeCodigoPostal").style.display = "none";
+        document.getElementById("errorMensajeProvincia").style.display = "none";
     }
 
   function NuevaLocalidad()

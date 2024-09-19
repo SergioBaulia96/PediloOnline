@@ -70,7 +70,7 @@ public class LocalidadesController : Controller
        )
     {
         string resultado = "";
-        Nombre = Nombre.ToUpper();
+        Nombre = Nombre?.ToUpper();
         if (LocalidadID == 0)
         {
             var localidad = new Localidad

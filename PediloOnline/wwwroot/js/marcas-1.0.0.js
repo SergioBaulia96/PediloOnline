@@ -42,6 +42,7 @@ function ListadoMarcas()
 function LimpiarModal(){
     document.getElementById("MarcaID").value = 0;
     document.getElementById("MarcaNombre").value = "";
+    document.getElementById("errorMensajeMarcaNombre").style.display = "none";
 }
 
 function NuevaMarca(){
@@ -51,6 +52,14 @@ function NuevaMarca(){
 function GuardarMarca(){
     let marcaID = document.getElementById("MarcaID").value;
     let marcaNombre = document.getElementById("MarcaNombre").value;
+
+    if (marcaNombre === "") {
+        document.getElementById("errorMensajeMarcaNombre").style.display = "block";
+        isValid = false;
+    } else {
+        document.getElementById("errorMensajeMarcaNombre").style.display = "none";
+    }
+
 
     $.ajax({
         url: '../../Marcas/GuardarMarca',
