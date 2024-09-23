@@ -42,10 +42,10 @@ public class EmpresasController: Controller {
          {
              var localidad = listadoLocalidades.Where(t => t.LocalidadID == empresa.LocalidadID).Single();
             
-             var empresadMostar = new VistaEmpresas
+             var empresaMostar = new VistaEmpresas
              {
                  EmpresaID = empresa.EmpresaID,
-                 LocalidadID = localidad.LocalidadID,
+                 LocalidadID = empresa.LocalidadID,
                  LocalidadNombre = localidad.LocalidadNombre,
                  RazonSocial = empresa.RazonSocial, 
                  NombreFantasia = empresa.NombreFantasia,
@@ -56,12 +56,12 @@ public class EmpresasController: Controller {
                  UsuarioTitular = empresa.UsuarioTitular,
               
              };
-             EmpresasMostar.Add(empresadMostar);
+             EmpresasMostar.Add(empresaMostar);
          }
          return Json(EmpresasMostar);
      }
 
-    public JsonResult GuardarEmpresa(int empresaID, string razonSocial, string nombreFantasia, int localidad, string documento, string telefono, string email, string usuarioTitular)
+    public JsonResult GuardarEmpresa(int empresaID, string razonSocial, string nombreFantasia, string domicilio, int localidad, string documento, string telefono, string email, string usuarioTitular)
     {
         string resultado = "";
 
@@ -73,6 +73,7 @@ public class EmpresasController: Controller {
             {
                 RazonSocial = razonSocial,
                 NombreFantasia = nombreFantasia,
+                Domicilio = domicilio,
                 LocalidadID = localidad,
                 NroTipoDocumento = documento,
                 Telefono = telefono,
@@ -92,6 +93,7 @@ public class EmpresasController: Controller {
                 /* editarEmpresa.EmpresaID = empresaID; */
                 editarEmpresa.RazonSocial = razonSocial;
                 editarEmpresa.NombreFantasia = nombreFantasia;
+                 editarEmpresa.Domicilio = domicilio;
                 editarEmpresa.NroTipoDocumento = documento;
                 editarEmpresa.Telefono = telefono;
                 editarEmpresa.Email = email;

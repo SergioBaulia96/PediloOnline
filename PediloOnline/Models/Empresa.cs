@@ -45,7 +45,7 @@ namespace PediloOnline.Models;
         public int EmpresaID { get; set; }
         public int LocalidadID {get; set;}
         
-        public string LocalidadNombre {get; set;}
+        public string? LocalidadNombre {get; set;}
 
         public string? RazonSocial { get; set; }
 

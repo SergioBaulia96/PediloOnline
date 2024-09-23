@@ -56,7 +56,6 @@ function LimpiarModal() {
     document.getElementById("errorMensajeNombreProducto").style.display = "none";
     document.getElementById("errorMensajeDescripcion").style.display = "none";
     document.getElementById("errorMensajePrecio").style.display = "none";
-    document.getElementById("errorMensajeEmail").style.display = "none";
 }
 
 function NuevoProducto() {

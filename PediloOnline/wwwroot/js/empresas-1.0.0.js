@@ -8,6 +8,7 @@ function ListadoEmpresas() {
     type: "POST",
     dataType: "json",
     success: function (EmpresasMostar) {
+      $("#modalEmpresas").modal("hide");
       LimpiarModal();
       let contenidoTabla = ``;
 
@@ -16,6 +17,7 @@ function ListadoEmpresas() {
                 <tr>
                     <td>${empresa.razonSocial}</td>
                     <td>${empresa.nombreFantasia}</td>
+                    <td>${empresa.domicilio}</td>
                     <td>${empresa.localidadNombre}</td>
                     <td>${empresa.nroTipoDocumento}</td>
                     <td>${empresa.telefono}</td>
@@ -60,11 +62,74 @@ function AgregarEmpresa() {
   let empresaID = document.getElementById("empresaID").value;
   let razonSocial = document.getElementById("razonSocial").value;
   let nombreFantasia = document.getElementById("razonSocial").value;
+  let domicilio = document.getElementById("domicilio").value;
   let localidad = document.getElementById("LocalidadID").value;
   let documento = document.getElementById("documento").value;
   let telefono = document.getElementById("telefono").value;
   let email = document.getElementById("email").value;
   let usuarioTitular = document.getElementById("usuarioTitular").value;
+
+  let isValid = true;
+
+  if (razonSocial === "") {
+      document.getElementById("errorMensajeRazonSocial").style.display = "block";
+      isValid = false;
+  } else {
+      document.getElementById("errorMensajeRazonSocial").style.display = "none";
+  }
+
+  if (nombreFantasia === "") {
+      document.getElementById("errorMensajeNombreFantasia").style.display = "block";
+      isValid = false;
+  } else {
+      document.getElementById("errorMensajeNombreFantasia").style.display = "none";
+  }
+
+  if (domicilio === "") {
+      document.getElementById("errorMensajeDomicilio").style.display = "block";
+      isValid = false;
+  } else {
+      document.getElementById("errorMensajeDomicilio").style.display = "none";
+  }
+
+  if (localidad === "0") {
+      document.getElementById("errorMensajeLocalidad").style.display = "block";
+      isValid = false;
+  } else {
+      document.getElementById("errorMensajeLocalidad").style.display = "none";
+  }
+
+  if (documento === "") {
+      document.getElementById("errorMensajeDocumento").style.display = "block";
+      isValid = false;
+  } else {
+      document.getElementById("errorMensajeDocumento").style.display = "none";
+  }
+
+  if (telefono === "") {
+      document.getElementById("errorMensajeTelefono").style.display = "block";
+      isValid = false;
+  } else {
+      document.getElementById("errorMensajeTelefono").style.display = "none";
+  }
+
+  if (email === "") {
+      document.getElementById("errorMensajeEmail").style.display = "block";
+      isValid = false;
+  } else {
+      document.getElementById("errorMensajeEmail").style.display = "none";
+  }
+
+  if (usuarioTitular === "") {
+    document.getElementById("errorMensajeUsuarioTitular").style.display = "block";
+    isValid = false;
+} else {
+    document.getElementById("errorMensajeUsuarioTitular").style.display = "none";
+}
+
+  if (!isValid) {
+      return;  // Detener la ejecución aquí si isValid es false
+    }
 
 
   $.ajax({
@@ -72,6 +137,7 @@ function AgregarEmpresa() {
     data: {
         empresaID: empresaID,
         razonSocial: razonSocial,
+        domicilio: domicilio,
         nombreFantasia: nombreFantasia,
         localidad: localidad,
         documento: documento,
@@ -110,7 +176,7 @@ function ModalEditarEmpresa (empresaID) {
         document.getElementById("razonSocial").value = empresa.razonSocial,
         document.getElementById("nombreFantasia").value = empresa.nombreFantasia,
         document.getElementById("domicilio").value = empresa.domicilio,
-        document.getElementById("LocalidadID").value = empresa.localidadNombre,
+        document.getElementById("LocalidadID").value = empresa.localidadID,
         document.getElementById("documento").value = empresa.nroTipoDocumento,
         document.getElementById("telefono").value = empresa.telefono,
         document.getElementById("email").value = empresa.email;

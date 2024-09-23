@@ -83,7 +83,7 @@ function GuardarCliente() {
 
     let isValid = true;
 
-    if (tipoCliente === "0") {
+    if (tipoCliente === "") {
         document.getElementById("errorMensajeTipoCliente").style.display = "block";
         isValid = false;
     } else {

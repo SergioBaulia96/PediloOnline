@@ -56,7 +56,7 @@ public class ClientesController : Controller
             clientes = clientes.Where(t => t.ClienteID == id);
         }
 
-        if (buscarLocalidad != null)
+        if (buscarLocalidad != 0)
         {
             clientes = clientes.Where(t => t.LocalidadID == buscarLocalidad);
         }
