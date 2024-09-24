@@ -4,9 +4,10 @@
 @{
     ViewData["Title"] = "Log in";
 }
+<link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
 
 
-        <section class="container-login" style="align-items: center; text-align: center; margin-left: 400px;">
+        <section class="container-login" style="align-items: center; margin-left: 270px;">
             <form id="account" method="post">
                 <h2>Pedilo Online</h2>
                 <hr />
@@ -26,7 +27,7 @@
                 </div>
                 <div>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registerarse</a>
+                        <a asp-page="./Register" class="register" asp-route-returnUrl="@Model.ReturnUrl">Registerarse</a>
                     </p>
                 </div>
             </form>

@@ -1,5 +1,7 @@
 /*LOGIN*/
-
+body{
+    overflow: hidden;
+}
 .container-login {
     max-width: 400px;
     height: 500px;
@@ -86,6 +88,8 @@
 h2 {
  text-align: center;
  margin-top: 30px;
+ font-weight: 800;
+ color: #0099ff;
 }
 hr{
     margin-bottom: 50px;
@@ -103,4 +107,13 @@ hr{
     box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
     border: none;
     transition: all 0.2s ease-in-out;
+}
+
+.register{
+    font-family:Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+}
+p{
+    text-align: center;
 }
