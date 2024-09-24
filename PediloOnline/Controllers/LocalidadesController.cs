@@ -7,7 +7,7 @@ using PediloOnline.Data;
 using static PediloOnline.Models.Localidad;
 
 namespace PediloOnline.Controllers;
-
+[Authorize]
 public class LocalidadesController : Controller
 {
     private ApplicationDbContext _context;

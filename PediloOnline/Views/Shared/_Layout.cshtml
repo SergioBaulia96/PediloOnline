@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<IdentityUser> SignInManager
+@using Microsoft.AspNetCore.Identity
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -15,48 +18,64 @@
 </head>
 
 <body>
-    <!-- Botón para mostrar/ocultar el menú lateral -->
-    <button class="menu-toggle" id="menuToggle">☰</button>
-    
-    <div class="sidebar" id="sidebarMenu">
-        <div class="sidebar-header">
-            <h4 class="text-white text-center">PediloOnline</h4>
-        </div>
-        <a href="@Url.Action("Index", "Home")">Home</a>
-        <a href="@Url.Action("Privacy", "Home")">Privacy</a>
-        <a href="@Url.Action("Index", "Productos")">Productos</a>
-        <a href="@Url.Action("Index", "Carrito")">Carrito</a>
-        <a href="@Url.Action("Clientes", "Clientes")">Clientes</a>
-        <a href="@Url.Action("Index", "Empresas")">Empresa</a>
-        <a href="@Url.Action("Index", "Localidades")">Localidades</a>
-        <a href="@Url.Action("Index", "Rubros")">Rubros</a>
-        <a href="@Url.Action("Index", "Subrubros")">SubRubros</a>
-        <a href="@Url.Action("Index", "Marcas")">Marcas</a>
-    </div>
-    <header>
-        <nav class="fixed-top navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-color border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <!-- Botón para mostrar/ocultar el menú lateral -->
+        <button class="menu-toggle" id="menuToggle">☰</button>
+
+        <div class="sidebar" id="sidebarMenu">
+            <div class="sidebar-header">
+                <h4 class="text-white text-center">PediloOnline</h4>
             </div>
-        </nav>
-    </header>
+            <a href="@Url.Action("Index", "Home")">Home</a>
+            <a href="@Url.Action("Privacy", "Home")">Privacy</a>
+            <a href="@Url.Action("Index", "Productos")">Productos</a>
+            <a href="@Url.Action("Index", "Carrito")">Carrito</a>
+            <a href="@Url.Action("Clientes", "Clientes")">Clientes</a>
+            <a href="@Url.Action("Index", "Empresas")">Empresa</a>
+            <a href="@Url.Action("Index", "Localidades")">Localidades</a>
+            <a href="@Url.Action("Index", "Rubros")">Rubros</a>
+            <a href="@Url.Action("Index", "Subrubros")">SubRubros</a>
+            <a href="@Url.Action("Index", "Marcas")">Marcas</a>
+        </div>
+        <header>
+            <nav
+                class="fixed-top navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-color border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                        </ul>
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+            </nav>
+        </header>
 
-    <div class="main-content">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+        <div class="main-content">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
 
-    <footer class="border-top footer text-muted">
-    </footer>
+        <footer class="border-top footer text-muted"></footer>
+
+    }
+    else
+    {
+        <div class="main-content">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    }
+
+
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

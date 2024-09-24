@@ -1,4 +1,5 @@
 using System.IO.Compression;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PediloOnline.Data;
@@ -6,7 +7,7 @@ using PediloOnline.Models;
 using SQLitePCL;
 namespace PediloOnline.Controllers;
 
-
+[Authorize]
 public class SubrubrosController : Controller
 {
     private ApplicationDbContext _context;
