@@ -41,7 +41,11 @@ function ListaSubrubros(){
 
        
         error: function (xhr, status) {
-            alert('Disculpe, existió un problema al deshabilitar');
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "¡Algo salio mal!",
+          });
         }
     });
 }
@@ -82,20 +86,46 @@ function CargarSubrubro() {
       type: "POST",
       dataType: "json",
       success: function (resultado) {
-        
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: resultado,
+          showConfirmButton: false,
+          timer: 1500
+        });
         ListaSubrubros(); 
       },
       error: function (xhr, status) {
-        console.log("Disculpe, existió un problema al guardar el registro");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "¡Algo salio mal!",
+        });
       },
     });
   }
 
   function ValidarEliminar(subRubroID) {
-    let confirmacion = confirm("Desea eliminar?");
+    Swal.fire({
+      title: "¿Desea eliminar el rubro?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Eliminar",
+      denyButtonText: `Cancelar`
+    }).then((result) => {
+      if (result.isConfirmed) {
+          EliminarSubrubro(subRubroID);
+          Swal.fire("Rubro eliminado!", "", "success");
+          
+        
+      } else if (result.isDenied) {
+        Swal.fire("No se elimino ningun rubro", "", "info");
+      }
+    });
+    /* let confirmacion = confirm("Desea eliminar?");
     if (confirmacion == true) {
       EliminarSubrubro(subRubroID);
-    }
+    } */
 
   }
 
@@ -122,7 +152,11 @@ function CargarSubrubro() {
         ListaSubrubros();
       },
       error: function (xhr, status) {
-        console.log("Disculpe, existió un problema al guardar el registro");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "¡Algo salio mal!",
+        });
       },
     });
   }

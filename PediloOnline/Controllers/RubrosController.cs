@@ -57,11 +57,10 @@ public class RubrosController : Controller
                     };
                     _context.Add(tipoRubro);
                     _context.SaveChanges();
+
+                    resultado = "Se guardo el rubro correctamente";
                 }
-                else
-                {
-                    resultado = "YA EXISTE UN REGISTRO CON LA MISMA DESCRIPCIÓN";
-                }
+                
             }
             else
             {
@@ -76,19 +75,14 @@ public class RubrosController : Controller
                         //QUIERE DECIR QUE EL ELEMENTO EXISTE Y ES CORRECTO ENTONCES CONTINUAMOS CON EL EDITAR
                         rubroEditar.RubroNombre = rubroNombre;
                         _context.SaveChanges();
+
+                        resultado = "Se modifico el rubro correctamnete";
                     }
-                    else
-                    {
-                        resultado = "YA EXISTE UN REGISTRO CON LA MISMA DESCRIPCIÓN";
-                    }
+                    
                 }
             }
         }
-        else
-        {
-            resultado = "DEBE INGRESAR UNA DESCRIPCIÓN.";
-        }
-
+        
         return Json(resultado);
     }
 
@@ -101,9 +95,9 @@ public class RubrosController : Controller
             var eliminarRubro = _context.Rubros.Find(rubroID);
             _context.Remove(eliminarRubro);
             _context.SaveChanges();
-            resultado = "El rubro se elimino correctamente";
+            resultado = "1"; //El rubro se elimino correctamente
         }  else {
-            resultado = "No se puede eliminar, el rubro tiene subrubros asociados";
+            resultado = "2"; //No se puede eliminar, el rubro tiene subrubros asociados
         } 
 
                  

@@ -125,9 +125,13 @@ function GuardarProducto() {
         type: 'POST',
         datatype: 'json',
         success: function (resultado) {
-            if (resultado != "") {
-                alert(resultado);
-            }
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: resultado,
+                showConfirmButton: false,
+                timer: 1500
+              });
             ListadoProductos();
         },
         error: function (xhr, status) {
@@ -178,10 +182,26 @@ function EliminarProducto(productoID) {
 }
 
 function ValidarEliminacion(productoID) {
-    var elimina = confirm("¿Esta seguro que desea eliminar?");
+    Swal.fire({
+        title: "¿Desea eliminar el producto?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "Eliminar",
+        denyButtonText: `Cancelar`
+      }).then((result) => {
+        if (result.isConfirmed) {
+            EliminarProducto(productoID);
+            Swal.fire("producto eliminado!", "", "success");
+            
+          
+        } else if (result.isDenied) {
+          Swal.fire("No se elimino ningun producto", "", "info");
+        }
+      });
+    /* var elimina = confirm("¿Esta seguro que desea eliminar?");
     if (elimina == true) {
         EliminarProducto(productoID);
-    }
+    } */
 }
 
 //funcion que convierte lo que escribo en los input a mayuscula

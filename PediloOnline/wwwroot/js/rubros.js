@@ -66,6 +66,13 @@ function CargarRubro() {
     type: "POST",
     dataType: "json",
     success: function (resultado) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: resultado,
+        showConfirmButton: false,
+        timer: 1500
+      });
       ListadoRubros();
     },
     error: function (xhr, status) {
@@ -131,10 +138,23 @@ function LimpiarModal() {
 }
 
 function ValidarEliminar(rubroID) {
-  var confirmacion = confirm("Desea Eliminar rubro");
+  Swal.fire({
+    title: "¿Desea eliminar el rubro?",
+    showDenyButton: true,
+    showCancelButton: false,
+    confirmButtonText: "Eliminar",
+    denyButtonText: `Cancelar`
+  }).then((result) => {
+      if (result.isConfirmed) {
+      EliminarRubro(rubroID);
+      } else if (result.isDenied) {
+      Swal.fire("No se elimino ninguna localidad", "", "info");
+    }
+  });
+  /* var confirmacion = confirm("Desea Eliminar rubro");
   if (confirmacion == true) {
     EliminarRubro(rubroID);
-  }
+  } */
 
 }
 
@@ -147,9 +167,12 @@ function EliminarRubro(rubroID) {
     type: "POST",
     dataType: "json",
     success: function (resultado) {
-      alert(resultado);
+      if (resultado == "1") {
+        Swal.fire("El rubro se elimino correctamente", "", "success");
+      } else {
+        Swal.fire("No se puede eliminar, el rubro tiene subrubros asociados", "", "error");
+      }
       ListadoRubros();
-
     },
     error: function (xhr, status) {
       console.log("Disculpe, existió un problema al eliminar el rubro");
