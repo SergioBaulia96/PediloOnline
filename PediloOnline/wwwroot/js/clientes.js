@@ -97,7 +97,7 @@ function GuardarCliente() {
         document.getElementById("errorMensajeLocalidad").style.display = "none";
     }
 
-    if (nombreCopleto === "") {
+    if (nombreCompleto === "") {
         document.getElementById("errorMensajeNombre").style.display = "block";
         isValid = false;
     } else {
@@ -152,9 +152,13 @@ function GuardarCliente() {
         type: 'POST',
         datatype: 'json',
         success: function (resultado) {
-            if (resultado != "") {
-                alert(resultado);
-            }
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: resultado,
+                showConfirmButton: false,
+                timer: 1500
+              });
             ListadoClientes();
         },
         error: function (xhr, status) {
@@ -207,10 +211,26 @@ function EliminarCliente(clienteID) {
 }
 
 function ValidarEliminacion(clienteID) {
-    var elimina = confirm("¿Esta seguro que desea eliminar?");
+    Swal.fire({
+        title: "¿Desea eliminar el cliente?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "Eliminar",
+        denyButtonText: `Cancelar`
+      }).then((result) => {
+        if (result.isConfirmed) {
+            EliminarCliente(clienteID);
+            Swal.fire("Cliente eliminada!", "", "success");
+            
+          
+        } else if (result.isDenied) {
+          Swal.fire("No se elimino ninguna clienete", "", "info");
+        }
+      });
+    /* var elimina = confirm("¿Esta seguro que desea eliminar?");
     if (elimina == true) {
         EliminarCliente(clienteID);
-    }
+    } */
 }
 
 //funcion que convierte lo que escribo en los input a mayuscula

@@ -83,13 +83,13 @@ function GuardarLocalidad(){
         type: 'POST',
         dataType: 'json',   
         success: function (resultado) {
-            // Swal.fire({
-            //     position: "bottom-end",
-            //     icon: "success",
-            //     title: "Registro guardado correctamente!",
-            //     showConfirmButton: false,
-            //     timer: 1000
-            // }); 
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: resultado,
+                showConfirmButton: false,
+                timer: 1500
+              });
             ListadoLocalidades();
         },
         error: function (xhr, status) {
@@ -125,6 +125,33 @@ function AbrirEditarLocalidad(localidadID){
     });
 }
 
+
+
+function ValidarEliminacion(localidadID)
+{   
+    Swal.fire({
+        title: "¿Desea eliminar la localidad?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "Eliminar",
+        denyButtonText: `Cancelar`
+      }).then((result) => {
+        if (result.isConfirmed) {
+            EliminarLocalidad(localidadID);
+            Swal.fire("¡Localidad eliminado!", "", "success");
+            
+          
+        } else if (result.isDenied) {
+          Swal.fire("No se elimino ninguna localidad", "", "info");
+        }
+      });
+    /* var elimina = confirm("¿Esta seguro que desea eliminar?");
+    if(elimina == true)
+        {
+            EliminarLocalidad(localidadID);
+        } */
+}
+
 function EliminarLocalidad(localidadID){
     $.ajax({
         url: '../../Localidades/EliminarLocalidad',
@@ -138,15 +165,6 @@ function EliminarLocalidad(localidadID){
             console.log('Problemas al eliminar el cliente');
         }
     });
-}
-
-function ValidarEliminacion(localidadID)
-{
-    var elimina = confirm("¿Esta seguro que desea eliminar?");
-    if(elimina == true)
-        {
-            EliminarLocalidad(localidadID);
-        }
 }
 
     function LimpiarModal() {

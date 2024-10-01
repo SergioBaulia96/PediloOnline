@@ -82,7 +82,7 @@ public class LocalidadesController : Controller
             _context.Add(localidad);
             _context.SaveChanges();
 
-            resultado = "EL REGISTRO SE GUARDO CORRECTAMENTE";
+            resultado = "La localidad se guardo correctamente";
         }
          else
          {
@@ -95,7 +95,7 @@ public class LocalidadesController : Controller
                  editarLocalidad.ProvinciaID = ProvinciaID;
                  _context.SaveChanges();
 
-                 resultado = "EL REGISTRO SE ACTUALIZÓ CORRECTAMENTE";
+                 resultado = "La localidad se actualizó correctamente";
              }
          }
         return Json(resultado);

@@ -106,6 +106,8 @@ public class ProductosController : Controller
                 };
                 _context.Add(Producto);
                 _context.SaveChanges();
+
+                resultado = "El producto se guardo correctamente";
             }
         }
         else
@@ -120,6 +122,8 @@ public class ProductosController : Controller
                 editarProducto.Precio = Precio;
 
                 _context.SaveChanges();
+
+                resultado = "El producto se actualizó correctamente";
             }
         }
         return Json(resultado);

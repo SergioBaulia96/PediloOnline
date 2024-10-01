@@ -70,9 +70,13 @@ function GuardarMarca(){
         type: 'POST',
         dataType: 'json',
         success: function(resultado){
-            if(resultado != "") {
-                alert(resultado)
-            }
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: resultado,
+                showConfirmButton: false,
+                timer: 1500
+              });
             ListadoMarcas();
         },
         error: function(xhr, status){
@@ -103,11 +107,27 @@ function ModalEditar(marcaID){
 
 function ValidarEliminacion(marcaID)
 {
-    var elimina = confirm("¿Esta seguro que desea eliminar?");
+    Swal.fire({
+        title: "¿Desea eliminar la marca?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "Eliminar",
+        denyButtonText: `Cancelar`
+      }).then((result) => {
+        if (result.isConfirmed) {
+            EliminarMarca(marcaID);
+            Swal.fire("Marca eliminada!", "", "success");
+            
+          
+        } else if (result.isDenied) {
+          Swal.fire("No se elimino ninguna marca", "", "info");
+        }
+      });
+    /* var elimina = confirm("¿Esta seguro que desea eliminar?");
     if(elimina == true)
         {
             EliminarMarca(marcaID);
-        }
+        } */
 }
 
 function EliminarMarca(marcaID){

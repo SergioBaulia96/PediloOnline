@@ -126,6 +126,8 @@ public class ClientesController : Controller
                 };
                 _context.Add(Cliente);
                 _context.SaveChanges();
+
+                resultado = "El cliente se guardo correctamente";
             }
         }
         else
@@ -141,6 +143,8 @@ public class ClientesController : Controller
                 editarCliente.Email = Email;
 
                 _context.SaveChanges();
+
+                resultado = "El cliente se actualizó correctamente";
             }
         }
         return Json(resultado);

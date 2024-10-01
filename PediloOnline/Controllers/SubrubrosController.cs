@@ -86,11 +86,10 @@ public class SubrubrosController : Controller
                     };
                     _context.Add(tiposubRubro);
                     _context.SaveChanges();
+
+                    resultado = "El subrubro se guardo correctamente";
                 }
-                else
-                {
-                    resultado = "YA EXISTE UN REGISTRO CON LA MISMA DESCRIPCIÓN";
-                }
+                
             }
             else
             {
@@ -108,15 +107,12 @@ public class SubrubrosController : Controller
                     }
                     else
                     {
-                        resultado = "YA EXISTE UN REGISTRO CON LA MISMA DESCRIPCIÓN";
+                        resultado = "El subrubro se actualizó correctamente";
                     }
                 }
             }
         }
-        else
-        {
-            resultado = "DEBE INGRESAR UNA DESCRIPCIÓN.";
-        }
+        
 
         return Json(resultado);
     }
