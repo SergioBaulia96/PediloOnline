@@ -130,28 +130,158 @@ button.accept-policy {
   margin-left: 0;
   width: 100%;
 }
-/* Estilo para ocultar el submenú inicialmente */
-.dropdown-menu {
-  display: none;
-  width: 100%; /* Ocupa todo el ancho */
-  padding-left: 15px;
-  background-color: #343a40;
+
+/*SPINNER*/
+
+/* From Uiverse.io by fanishah */ 
+.loader {
+  width: 8em;
+  height: 8em;
 }
 
-
-
-.dropdown-toggle {
-  cursor: pointer;
+/* Estilo del contenedor del loader */
+.loader-container {
+  position: fixed; /* Posición fija */
+  top: 0; /* En la parte superior */
+  left: 0; /* A la izquierda */
+  width: 100vw; /* Ocupa todo el ancho */
+  height: 100vh; /* Ocupa toda la altura */
+  display: flex; /* Flex para centrar */
+  justify-content: center; /* Centrado horizontal */
+  align-items: center; /* Centrado vertical */
+  background-color: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente */
+  z-index: 9999; /* Mantiene el loader por encima del contenido */
 }
 
-.dropdown-menu a {
-  width: 100%; /* Ocupa todo el ancho */
-  padding-left: 20px; /* Añade espacio interno para diferenciar los subitems */
-  box-sizing: border-box;
-  background-color: #7b7f84;
+.hidden {
+  display: none; /* Clase para ocultar el loader */
 }
 
-/* Mostrar el submenú cuando esté abierto */
-.dropdown-menu.open {
-  display: block;
+.loader__eye1,
+  .loader__eye2,
+  .loader__mouth1,
+  .loader__mouth2 {
+  animation: eye1 3s ease-in-out infinite;
 }
+
+.loader__eye1,
+  .loader__eye2 {
+  transform-origin: 64px 64px;
+}
+
+.loader__eye2 {
+  animation-name: eye2;
+}
+
+.loader__mouth1 {
+  animation-name: mouth1;
+}
+
+.loader__mouth2 {
+  animation-name: mouth2;
+  visibility: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: hsl(var(--hue), 90%, 10%);
+    --fg: hsl(var(--hue), 90%, 90%);
+  }
+}
+
+@keyframes eye1 {
+  from {
+    transform: rotate(-260deg) translate(0, -56px);
+  }
+
+  50%,
+    60% {
+    animation-timing-function: cubic-bezier(0.17, 0, 0.58, 1);
+    transform: rotate(-40deg) translate(0, -56px) scale(1);
+  }
+
+  to {
+    transform: rotate(225deg) translate(0, -56px) scale(0.35);
+  }
+}
+
+@keyframes eye2 {
+  from {
+    transform: rotate(-260deg) translate(0, -56px);
+  }
+
+  50% {
+    transform: rotate(40deg) translate(0, -56px) rotate(-40deg) scale(1);
+  }
+
+  52.5% {
+    transform: rotate(40deg) translate(0, -56px) rotate(-40deg) scale(1, 0);
+  }
+
+  55%,
+    70% {
+    animation-timing-function: cubic-bezier(0, 0, 0.28, 1);
+    transform: rotate(40deg) translate(0, -56px) rotate(-40deg) scale(1);
+  }
+
+  to {
+    transform: rotate(150deg) translate(0, -56px) scale(0.4);
+  }
+}
+
+@keyframes eyeBlink {
+  from,
+    25%,
+    75%,
+    to {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes mouth1 {
+  from {
+    animation-timing-function: ease-in;
+    stroke-dasharray: 0 351.86;
+    stroke-dashoffset: 0;
+  }
+
+  25% {
+    animation-timing-function: ease-out;
+    stroke-dasharray: 175.93 351.86;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    animation-timing-function: steps(1, start);
+    stroke-dasharray: 175.93 351.86;
+    stroke-dashoffset: -175.93;
+    visibility: visible;
+  }
+
+  75%,
+    to {
+    visibility: hidden;
+  }
+}
+
+@keyframes mouth2 {
+  from {
+    animation-timing-function: steps(1, end);
+    visibility: hidden;
+  }
+
+  50% {
+    animation-timing-function: ease-in-out;
+    visibility: visible;
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -351.86;
+  }
+}
+

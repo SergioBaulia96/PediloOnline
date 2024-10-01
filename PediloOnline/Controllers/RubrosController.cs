@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PediloOnline.Data;
 using PediloOnline.Models;
 namespace PediloOnline.Controllers;
 
-
+[Authorize]
 public class RubrosController : Controller
 {
     private ApplicationDbContext _context;

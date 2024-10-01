@@ -1,9 +1,10 @@
 using PediloOnline.Data;
 using Microsoft.AspNetCore.Mvc;
 using PediloOnline.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PediloOnline.Controllers;
-
+[Authorize]
 public class MarcasController : Controller
 {
     private ApplicationDbContext _context;

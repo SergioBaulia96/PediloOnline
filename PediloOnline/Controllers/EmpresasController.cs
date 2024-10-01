@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PediloOnline.Data;
 
 namespace PediloOnline.Models;
-
+[Authorize]
 public class EmpresasController: Controller {
     private ApplicationDbContext _context;
 
