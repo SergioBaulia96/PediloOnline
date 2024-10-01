@@ -14,12 +14,12 @@ function ListadoProductos() {
             let contenidoTabla = ``;
 
             $.each(productosMostrar, function (index, productoMostrar) {
-
+                let precioFormateado = `$ ${parseFloat(productoMostrar.precio).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
                 contenidoTabla += `
                 <tr>
                     <td>${productoMostrar.nombreProducto}</td>
                     <td>${productoMostrar.descripcion}</td>
-                    <td>${productoMostrar.precio}</td>
+                    <td>${precioFormateado}</td>
                     <td>${productoMostrar.subRubroNombre}</td>
                     <td>${productoMostrar.marcaNombre}</td>
                     <td class="text-center">
