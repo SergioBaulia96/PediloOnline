@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     var sidebar = document.getElementById('sidebarMenu');
     var menuToggle = document.getElementById('menuToggle');
@@ -15,6 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
         mainContent.classList.toggle('expanded');
         navbar.classList.toggle('expanded'); // Expande la navbar
     });
+    
+    // Evento para mostrar/ocultar el submenú de Rubros
+    document.getElementById("rubrosDropdown").addEventListener("click", function (e) {
+        e.preventDefault();
+        var dropdownMenu = document.getElementById("rubrosMenu");
+        dropdownMenu.classList.toggle("open");
+    });
 });
+
 
 

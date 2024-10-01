@@ -75,7 +75,7 @@ function GuardarCliente() {
     let clienteID = document.getElementById("ClienteID").value;
     let tipoCliente = document.getElementById("TipoCliente").value;
     let localidadID = document.getElementById("LocalidadID").value;
-    let nombreCopleto = document.getElementById("NombreCompleto").value;
+    let nombreCompleto = document.getElementById("NombreCompleto").value;
     let domicilio = document.getElementById("Domicilio").value;
     let documento = document.getElementById("Documento").value;
     let telefono = document.getElementById("Telefono").value;
@@ -143,7 +143,7 @@ function GuardarCliente() {
             ClienteID: clienteID
             , TipoCliente: tipoCliente
             , LocalidadID: localidadID
-            , NombreCompleto: nombreCopleto
+            , NombreCompleto: nombreCompleto
             , Domicilio: domicilio
             , Documento: documento
             , Telefono: telefono
@@ -177,7 +177,7 @@ function AbrirEditarCliente(clienteID) {
             $("#tituloModal").text("Editar Cliente");
             document.getElementById("TipoCliente").value = cliente.tipoCliente,
                 document.getElementById("LocalidadID").value = cliente.localidadID,
-                document.getElementById("NombreCompleto").value = cliente.nombreCopleto,
+                document.getElementById("NombreCompleto").value = cliente.nombreCompleto,
                 document.getElementById("Domicilio").value = cliente.domicilio,
                 document.getElementById("Documento").value = cliente.documento,
                 document.getElementById("Telefono").value = cliente.telefono,

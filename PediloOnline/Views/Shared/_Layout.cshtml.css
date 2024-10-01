@@ -59,7 +59,11 @@ button.accept-policy {
   z-index: 1000;
   margin: 0; 
   padding: 0;
+  display: flex;
+  flex-direction: column;
 }
+
+
 
 /* Estilo del contenedor del encabezado de la sidebar */
 .sidebar-header {
@@ -125,4 +129,29 @@ button.accept-policy {
 .navbar.expanded {
   margin-left: 0;
   width: 100%;
+}
+/* Estilo para ocultar el submenú inicialmente */
+.dropdown-menu {
+  display: none;
+  width: 100%; /* Ocupa todo el ancho */
+  padding-left: 15px;
+  background-color: #343a40;
+}
+
+
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropdown-menu a {
+  width: 100%; /* Ocupa todo el ancho */
+  padding-left: 20px; /* Añade espacio interno para diferenciar los subitems */
+  box-sizing: border-box;
+  background-color: #7b7f84;
+}
+
+/* Mostrar el submenú cuando esté abierto */
+.dropdown-menu.open {
+  display: block;
 }
