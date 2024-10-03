@@ -104,7 +104,7 @@ function CargarRubro() {
 } */
 
 //recien agregado editar rubro
-/*  function ModalEditarRubros(rubroID){
+function ModalEditarRubros(rubroID){
    
  $.ajax({
      url: '../../Rubros/TraerRubrosModal',
@@ -117,8 +117,8 @@ function CargarRubro() {
          let rubro = rubrosPorID[0];
 
          document.getElementById("rubroID").value = rubroID;
-         $("#tituloModal").text("Editar Rubro");
-         document.getElementById("rubroNombre").value = rubro.rubroNombre,
+         $("#tituloRubros").text("Editar Rubro");
+         document.getElementById("rubroNombre").value = rubro.rubroNombre;
          
 
          $("#ModalRubros").modal("show");
@@ -128,7 +128,7 @@ function CargarRubro() {
          console.log('Disculpe, existió un problema al consultar el registro para ser modificado.');
      }
  });
-}  */
+} 
 
 function LimpiarModal() {
   document.getElementById("rubroID").value = 0;
@@ -151,10 +151,7 @@ function ValidarEliminar(rubroID) {
       Swal.fire("No se elimino ninguna localidad", "", "info");
     }
   });
-  /* var confirmacion = confirm("Desea Eliminar rubro");
-  if (confirmacion == true) {
-    EliminarRubro(rubroID);
-  } */
+  
 
 }
 

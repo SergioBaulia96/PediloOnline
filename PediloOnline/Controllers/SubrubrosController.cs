@@ -117,6 +117,17 @@ public class SubrubrosController : Controller
         return Json(resultado);
     }
 
+     public JsonResult TraerSubRubrosModal(int? subRubroID)
+    {
+        var subRubrosPorID = _context.SubRubros.ToList();
+        if (subRubroID != null)
+        {
+            subRubrosPorID = subRubrosPorID.Where(e => e.SubRubroID == subRubroID).ToList();
+        }
+
+        return Json(subRubrosPorID.ToList());
+    }
+
     public JsonResult EliminarSubrubro(int subRubroID)
     {
         var subrubro = _context.SubRubros.Find(subRubroID);
