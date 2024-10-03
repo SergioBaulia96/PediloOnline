@@ -1,49 +1,54 @@
 window.onload = ListadoLocalidades();
 
-function ListadoLocalidades(){
-
+function ListadoLocalidades() {
     $.ajax({
         url: '../../Localidades/ListadoLocalidades',
-        data: {},
         type: 'POST',
         datatype: 'json',
-        success: function(localidadesMostrar){
+        success: function(localidadesMostrar) {
             $("#localidadModal").modal("hide");
             LimpiarModal();
-            //console.log("Ejecuta funcion limpiar modal")
             let contenidoTabla = ``;
 
-            $.each(localidadesMostrar, function(index, localidadMostrar){
+            $.each(localidadesMostrar, function(index, localidad) {
+                let deshabilitado = localidad.activo ? "" : "table-secondary"; // Cambia color si está deshabilitada
+                let boton = localidad.activo 
+                    ? `<button type="button" class="btn btn-secondary" onclick="DeshabilitarLocalidad(${localidad.localidadID}, event)">
+                         <i class="fa-solid fa-ban"></i>
+                       </button>`
+                    : `<button type="button" class="btn btn-success" onclick="HabilitarLocalidad(${localidad.localidadID}, event)">
+                         <i class="fa-solid fa-check"></i> Habilitar
+                       </button>`;
+
+                let clickableClass = localidad.activo ? "clickable-row" : "";
 
                 contenidoTabla += `
-                <tr>
-                    <td>${localidadMostrar.nombre}</td>
-                    <td>${localidadMostrar.codigoPostal}</td>
-                    <td>${localidadMostrar.nombreProvincia}</td>
+                <tr class="${deshabilitado} ${clickableClass}" id="fila-${localidad.localidadID}" data-id="${localidad.localidadID}">
+                    <td>${localidad.nombre}</td>
+                    <td>${localidad.codigoPostal}</td>
+                    <td>${localidad.nombreProvincia}</td>
                     <td class="text-center">
-                    <button type="button" class="btn btn-success" onclick="AbrirEditarLocalidad(${localidadMostrar.localidadID})">
-                    Editar
-                    </button>
+                        ${boton}
                     </td>
-                    <td class="text-center">
-                    <button type="button" class="btn btn-danger" onclick="ValidarEliminacion(${localidadMostrar.localidadID})">
-                    Eliminar
-                    </button>
-                    </td>
-                </tr>
-                `;
-                
+                </tr>`;
             });
+
             document.getElementById("tbody-localidades").innerHTML = contenidoTabla;
+
+            // Asigna el evento de clic a las filas clicables
+            $(".clickable-row").click(function() {
+                let localidadID = $(this).data("id"); // Obtiene el ID de la fila
+                AbrirEditarLocalidad(localidadID); // Llama a la función para abrir el modal
+            });
         },
-        error: function (xhr, status){
-            alert('Disculpe, existio un problema al deshabilitar');
+        error: function(xhr, status) {
+            alert('Hubo un problema al listar las localidades');
         }
     });
 }
 
 
-function GuardarLocalidad(){
+function GuardarLocalidad() {
     let localidadID = document.getElementById("LocalidadID").value;
     let nombre = document.getElementById("LocalidadNombre").value.trim(); // Elimina espacios en blanco
     let codigoPostal = document.getElementById("CodigoPostal").value; // Elimina espacios en blanco
@@ -71,17 +76,17 @@ function GuardarLocalidad(){
     }
 
 
-    
+
     $.ajax({
         url: '../../Localidades/GuardarLocalidad',
-        data: { 
+        data: {
             localidadID: localidadID,
             nombre: nombre,
             codigoPostal: codigoPostal,
             provinciaID: provinciaID
         },
         type: 'POST',
-        dataType: 'json',   
+        dataType: 'json',
         success: function (resultado) {
             Swal.fire({
                 position: "center",
@@ -89,36 +94,33 @@ function GuardarLocalidad(){
                 title: resultado,
                 showConfirmButton: false,
                 timer: 1500
-              });
+            });
             ListadoLocalidades();
         },
         error: function (xhr, status) {
             console.log('Disculpe, existió un problema al guardar el registro');
         }
-    });    
+    });
 }
 
-function AbrirEditarLocalidad(localidadID){
+function AbrirEditarLocalidad(localidadID) {
     
     $.ajax({
         url: '../../Localidades/TraerLocalidadAlModal',
-        data: { 
-            localidadID: localidadID,
-        },
+        data: { localidadID: localidadID },
         type: 'POST',
         dataType: 'json',
-        success: function (localidadporID) { 
+        success: function (localidadporID) {
             let localidad = localidadporID[0];
 
             document.getElementById("LocalidadID").value = localidadID;
             $("#tituloModal").text("Editar Localidad");
-            document.getElementById("LocalidadNombre").value = localidad.localidadNombre,
-            document.getElementById("CodigoPostal").value = localidad.CodigoPostal,
+            document.getElementById("LocalidadNombre").value = localidad.localidadNombre;
+            document.getElementById("CodigoPostal").value = localidad.CodigoPostal;
             document.getElementById("ProvinciaID").value = localidad.provinciaID;
 
             $("#localidadModal").modal("show");
         },
-
         error: function (xhr, status) {
             console.log('Disculpe, existió un problema al consultar el registro para ser modificado.');
         }
@@ -127,62 +129,88 @@ function AbrirEditarLocalidad(localidadID){
 
 
 
-function ValidarEliminacion(localidadID)
-{   
+function ValidarDeshabilitacion(localidadID) {
     Swal.fire({
-        title: "¿Desea eliminar la localidad?",
+        title: "¿Desea deshabilitar la localidad?",
         showDenyButton: true,
         showCancelButton: false,
-        confirmButtonText: "Eliminar",
+        confirmButtonText: "Deshabilitar",
         denyButtonText: `Cancelar`
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
-            EliminarLocalidad(localidadID);
-            Swal.fire("¡Localidad eliminado!", "", "success");
-            
-          
+            DeshabilitarLocalidad(localidadID);
+            Swal.fire("¡Localidad deshabilitada!", "", "success");
         } else if (result.isDenied) {
-          Swal.fire("No se elimino ninguna localidad", "", "info");
-        }
-      });
-    /* var elimina = confirm("¿Esta seguro que desea eliminar?");
-    if(elimina == true)
-        {
-            EliminarLocalidad(localidadID);
-        } */
-}
-
-function EliminarLocalidad(localidadID){
-    $.ajax({
-        url: '../../Localidades/EliminarLocalidad',
-        data: { localidadID: localidadID },
-        type: 'POST',
-        dataType: 'json',
-        success: function(EliminarLocalidad){
-            ListadoLocalidades()
-        },
-        error: function(xhr, status){
-            console.log('Problemas al eliminar el cliente');
+            Swal.fire("La localidad no fue deshabilitada", "", "info");
         }
     });
 }
 
-    function LimpiarModal() {
-        document.getElementById("LocalidadID").value = 0;
-        document.getElementById("LocalidadNombre").value = "";
-        document.getElementById("CodigoPostal").value = "";
-        document.getElementById("ProvinciaID").value = 0;
-        document.getElementById("errorMensajeLocalidadNombre").style.display = "none";
-        document.getElementById("errorMensajeCodigoPostal").style.display = "none";
-        document.getElementById("errorMensajeProvincia").style.display = "none";
-    }
 
-  function NuevaLocalidad()
-  {
+function DeshabilitarLocalidad(localidadID, event) {
+    event.stopPropagation(); // Detener la propagación del evento de clic a la fila
+    $.ajax({
+        url: '../../Localidades/DeshabilitarLocalidad',
+        type: 'POST',
+        data: { localidadID: localidadID },
+        success: function(resultado) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Localidad deshabilitada',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            // Refrescar la tabla de localidades
+            ListadoLocalidades();
+        },
+        error: function(xhr, status) {
+            alert('Error al deshabilitar la localidad');
+        }
+    });
+}
+
+
+
+function HabilitarLocalidad(localidadID, event) {
+    event.stopPropagation(); // Detener la propagación del evento de clic a la fila
+    $.ajax({
+        url: '../../Localidades/HabilitarLocalidad',
+        type: 'POST',
+        data: { localidadID: localidadID },
+        success: function(resultado) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Localidad habilitada',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            // Refrescar la tabla de localidades
+            ListadoLocalidades();
+        },
+        error: function(xhr, status) {
+            alert('Error al habilitar la localidad');
+        }
+    });
+}
+
+
+function LimpiarModal() {
+    document.getElementById("LocalidadID").value = 0;
+    document.getElementById("LocalidadNombre").value = "";
+    document.getElementById("CodigoPostal").value = "";
+    document.getElementById("ProvinciaID").value = 0;
+    document.getElementById("errorMensajeLocalidadNombre").style.display = "none";
+    document.getElementById("errorMensajeCodigoPostal").style.display = "none";
+    document.getElementById("errorMensajeProvincia").style.display = "none";
+}
+
+function NuevaLocalidad() {
     $("#tituloModal").text("Nueva Localidad");
-  }
+}
 
 //funcion que convierte lo que escribo en los input a mayuscula
 function textoMayuscula(texto) {
     texto.value = texto.value.toUpperCase();
-  }
+}

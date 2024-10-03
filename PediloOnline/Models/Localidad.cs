@@ -14,6 +14,8 @@ namespace PediloOnline.Models;
         public string? CodigoPostal { get; set; }
 
         public int ProvinciaID { get; set; }
+        public bool Activo { get; set; }
+        
 
         // [NotMapped]
         // public string NombreVista { get { return LocalidadNombre + " / " + Provincia.ProvinciaNombre.ToUpper() + " / " + Provincia.Paises.PaisNombre; } }
@@ -36,6 +38,9 @@ namespace PediloOnline.Models;
     public string? CodigoPostal { get; set; }
 
     public string? NombreProvincia { get; set; }
+    public bool Activo { get; set; }
+
+    
    
 }
 

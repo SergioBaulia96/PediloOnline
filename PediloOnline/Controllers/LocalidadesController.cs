@@ -35,31 +35,31 @@ public class LocalidadesController : Controller
 
 
      public JsonResult ListadoLocalidades()
-     {
-         List<Vistalocalidades> LocalidadesMostar = new List<Vistalocalidades>();
+{
+    List<Vistalocalidades> LocalidadesMostar = new List<Vistalocalidades>();
 
-         var listadoLocalidades = _context.Localidades.ToList();
-         var listadoProvincias = _context.Provincias.ToList();
+    var listadoLocalidades = _context.Localidades.ToList();
+    var listadoProvincias = _context.Provincias.ToList();
 
+    foreach (var localidad in listadoLocalidades)
+    {
+        var provincia = listadoProvincias.FirstOrDefault(t => t.ProvinciaID == localidad.ProvinciaID);
 
+        var localidadMostar = new Vistalocalidades
+        {
+            LocalidadID = localidad.LocalidadID,
+            ProvinciaID = localidad.ProvinciaID,
+            Nombre = localidad.LocalidadNombre,
+            CodigoPostal = localidad.CodigoPostal,
+            NombreProvincia = provincia.ProvinciaNombre,
+            Activo = localidad.Activo // Asegúrate de que el estado activo se envía correctamente
+        };
 
-          foreach (var localidad in listadoLocalidades)
-         {
-             var provincia = listadoProvincias.Where(t => t.ProvinciaID == localidad.ProvinciaID).Single();
-            
-             var localidadMostar = new Vistalocalidades
-             {
-                 LocalidadID = localidad.LocalidadID,
-                 ProvinciaID = localidad.ProvinciaID,
-                 Nombre = localidad.LocalidadNombre,
-                 CodigoPostal = localidad.CodigoPostal, 
-                 NombreProvincia = provincia.ProvinciaNombre
-              
-             };
-             LocalidadesMostar.Add(localidadMostar);
-         }
-         return Json(LocalidadesMostar);
-     }
+        LocalidadesMostar.Add(localidadMostar);
+    }
+    return Json(LocalidadesMostar);
+}
+
 
      public JsonResult GuardarLocalidad(
        int LocalidadID,
@@ -113,12 +113,32 @@ public class LocalidadesController : Controller
     }
 
 
-    public JsonResult EliminarLocalidad(int LocalidadID)
-   {
-    var localidad = _context.Localidades.Find(LocalidadID);
-    _context.Remove(localidad);
+public IActionResult DeshabilitarLocalidad(int localidadID)
+{
+    var localidad = _context.Localidades.FirstOrDefault(l => l.LocalidadID == localidadID);
+    if (localidad == null)
+    {
+        return Json(new { success = false, message = "Localidad no encontrada" });
+    }
+
+    localidad.Activo = false; // Cambiamos el estado a deshabilitado
     _context.SaveChanges();
 
-    return Json(true);
-   }
+    return Json(new { success = true, message = "Localidad deshabilitada correctamente" });
+}
+
+
+public IActionResult HabilitarLocalidad(int localidadID)
+{
+    var localidad = _context.Localidades.FirstOrDefault(l => l.LocalidadID == localidadID);
+    if (localidad == null)
+    {
+        return Json(new { success = false, message = "Localidad no encontrada" });
+    }
+
+    localidad.Activo = true; // Cambiamos el estado a habilitado
+    _context.SaveChanges();
+
+    return Json(new { success = true, message = "Localidad habilitada correctamente" });
+}
     }
