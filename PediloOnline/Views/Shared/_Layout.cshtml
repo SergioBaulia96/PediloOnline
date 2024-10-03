@@ -18,63 +18,60 @@
 </head>
 
 <body>
-  @if (SignInManager.IsSignedIn(User))
-    {
-        <!-- Botón para mostrar/ocultar el menú lateral -->
-        <button class="menu-toggle" id="menuToggle">☰</button>
-        <div class="sidebar" id="sidebarMenu">
-            <div class="sidebar-header">
-                <h4 class="text-white text-center">PediloOnline</h4>
-            </div>
-            <a href="@Url.Action("Index", "Home")"><i class="fa-solid fa-house pe-2"></i>Home</a>
-            <a href="@Url.Action("Privacy", "Home")"><i class="fa-solid fa-eye-slash pe-2"></i>Privacy</a>
-            <a href="@Url.Action("Index", "Productos")"><i class="fa-solid fa-shop pe-2"></i>Productos</a>
-            <a href="@Url.Action("Index", "Carrito")"><i class="fa-solid fa-cart-shopping pe-2"></i>Carrito</a>
-            <a href="@Url.Action("Clientes", "Clientes")"><i class="fa-solid fa-users pe-2"></i>Clientes</a>
-            <a href="@Url.Action("Index", "Empresas")"><i class="fa-solid fa-business-time pe-2"></i>Empresa</a>
-            <a href="@Url.Action("Index", "Localidades")"><i class="fa-solid fa-city pe-2"></i>Localidades</a>
-            <div class="dropdown">
-                <a href="#" class="dropdown-toggle" id="rubrosDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-gear pe-2"></i>Rubros
-                </a>
-                <div class="dropdown-menu" id="rubrosMenu">
-                    <a class="dropdown-item" href="@Url.Action("Index", "Rubros")"><i class="fa-solid fa-gear pe-2"></i>Rubros</a>
-                    <a class="dropdown-item" href="@Url.Action("Index", "Subrubros")"><i class="fa-solid fa-gears pe-2"></i>SubRubros</a>
-                </div>
-            </div>
-            <a href="@Url.Action("Index", "Marcas")"><i class="fa-solid fa-tag pe-2"></i>Marcas</a>
+@if (SignInManager.IsSignedIn(User))
+{
+    <!-- Botón para mostrar/ocultar el menú lateral -->
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <div class="sidebar" id="sidebarMenu">
+        <div class="sidebar-header">
+            <h4 class="text-white text-center">PediloOnline</h4>
         </div>
-        
-        <header>
-            <nav class="fixed-top navbar navbar-expand-sm navbar-light bg-color border-bottom box-shadow mb-3">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-                        </ul>
-                        <partial name="_LoginPartial" />
-                    </div>
-                </div>
-            </nav>
-        </header>
+        <a href="@Url.Action("Index", "Home")"><i class="fa-solid fa-house pe-2"></i>Home</a>
+        <a href="@Url.Action("Index", "Productos")"><i class="fa-solid fa-shop pe-2"></i>Productos</a>
+        <a href="@Url.Action("Index", "Carrito")"><i class="fa-solid fa-cart-shopping pe-2"></i>Carrito</a>
+        <a href="@Url.Action("Clientes", "Clientes")"><i class="fa-solid fa-users pe-2"></i>Clientes</a>
+        <a href="@Url.Action("Index", "Empresas")"><i class="fa-solid fa-business-time pe-2"></i>Empresa</a>
+        <a href="@Url.Action("Index", "Localidades")"><i class="fa-solid fa-city pe-2"></i>Localidades</a>
+        <a href="#rubrosMenu" class="dropdown-toggle" data-bs-toggle="collapse" aria-expanded="false" aria-controls="rubrosMenu">
+            <i class="fa-solid fa-gear pe-2"></i>Rubros
+        </a>
+        <div class="collapse" id="rubrosMenu">
+            <a class="dropdown-item ps-4" href="@Url.Action("Index", "Rubros")"><i class="fa-solid fa-gear pe-2"></i>Rubros</a>
+            <a class="dropdown-item ps-4" href="@Url.Action("Index", "Subrubros")"><i class="fa-solid fa-gears pe-2"></i>SubRubros</a>
+        </div>
+        <a href="@Url.Action("Index", "Marcas")"><i class="fa-solid fa-tag pe-2"></i>Marcas</a>
+    </div>
 
-        <div class="main-content">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
-    }
-    else
-    {
-        <div class="main-content">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
-    }
+    <header>
+        <nav class="fixed-top navbar navbar-expand-sm navbar-light bg-color border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content" id="mainContent">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+}
+else
+{
+    <div class="main-content" id="mainContent">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+}
 
 
 <div class="loader-container" id="loader">
@@ -110,6 +107,20 @@
             </g>
         </svg>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const mainContent = document.getElementById('mainContent');
+
+        menuToggle.addEventListener('click', function () {
+            sidebarMenu.classList.toggle('sidebar-collapsed');
+            mainContent.classList.toggle('main-content-expanded');
+            mainContent.classList.toggle('main-content-collapsed');
+        });
+    });
+    </script>
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
