@@ -95,9 +95,9 @@ public class RubrosController : Controller
             var eliminarRubro = _context.Rubros.Find(rubroID);
             _context.Remove(eliminarRubro);
             _context.SaveChanges();
-            resultado = "1"; //El rubro se elimino correctamente
+            resultado = "1"; //El rubro se elimino correctamente, se envia al js y se muestra el mensaje de eliminado
         }  else {
-            resultado = "2"; //No se puede eliminar, el rubro tiene subrubros asociados
+            resultado = "2"; //No se puede eliminar, el rubro tiene subrubros asociados 
         } 
 
                  
