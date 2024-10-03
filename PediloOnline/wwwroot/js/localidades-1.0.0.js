@@ -16,8 +16,8 @@ function ListadoLocalidades() {
                     ? `<button type="button" class="btn btn-secondary" onclick="DeshabilitarLocalidad(${localidad.localidadID}, event)">
                          <i class="fa-solid fa-ban"></i>
                        </button>`
-                    : `<button type="button" class="btn btn-success" onclick="HabilitarLocalidad(${localidad.localidadID}, event)">
-                         <i class="fa-solid fa-check"></i> Habilitar
+                    : `<button type="button" class="btn btn-primary" onclick="HabilitarLocalidad(${localidad.localidadID}, event)">
+                         <i class="fa-solid fa-check"></i> 
                        </button>`;
 
                 let clickableClass = localidad.activo ? "clickable-row" : "";
