@@ -63,6 +63,7 @@ function NuevoProducto() {
 }
 
 function GuardarProducto() {
+    
     let productoID = document.getElementById("ProductoID").value;
     let marcaID = document.getElementById("MarcaID").value;
     let subRubroID = document.getElementById("SubRubroID").value;
