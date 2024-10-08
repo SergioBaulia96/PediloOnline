@@ -18,6 +18,7 @@ namespace PediloOnline.Models;
         public string? SubRubroNombre { get; set; }
 
         public bool Eliminado { get; set; }
+         public bool Activo { get; set; }
 
          public virtual Rubro Rubros { get; set; } 
 
@@ -33,5 +34,6 @@ namespace PediloOnline.Models;
         public string? SubRubroNombre { get; set; }
 
         public bool Eliminado { get; set; }
+         public bool Activo { get; set; }
 
     }

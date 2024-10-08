@@ -15,6 +15,7 @@ public class Cliente
     public TipoCliente TipoCliente { get; set; }
     public string? Email { get; set; }
     public bool Eliminado { get; set; }
+     public bool Activo { get; set; }
 
 
     public virtual ICollection<Venta> Ventas { get; set; }
@@ -42,4 +43,5 @@ public class VistaCliente
     public string? TipoCliente { get; set; }
     public string? Email { get; set; }
     public bool Eliminado { get; set; }
+    public bool Activo { get; set; }
 }

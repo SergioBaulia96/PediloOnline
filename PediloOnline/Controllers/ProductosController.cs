@@ -27,14 +27,14 @@ public class ProductosController : Controller
         var subrubros = _context.SubRubros.ToList();
 
         marcas.Add(new Marca { MarcaID = 0, MarcaNombre = "[MARCAS...]" });
-        ViewBag.MarcaID  = new SelectList(marcas.OrderBy(c => c.MarcaNombre), "MarcaID", "MarcaNombre");
+        ViewBag.MarcaID = new SelectList(marcas.OrderBy(c => c.MarcaNombre), "MarcaID", "MarcaNombre");
         subrubros.Add(new SubRubro { SubRubroID = 0, SubRubroNombre = "[SUBRUBROS...]" });
         ViewBag.SubRubroID = new SelectList(subrubros.OrderBy(c => c.SubRubroNombre), "SubRubroID", "SubRubroNombre");
 
         return View();
     }
 
-        public JsonResult ListadoProductos(int? id)
+    public JsonResult ListadoProductos(int? id)
     {
         List<VistaProductos> productosMostar = new List<VistaProductos>();
 
@@ -63,6 +63,7 @@ public class ProductosController : Controller
                 SubRubroNombre = subrubro.SubRubroNombre,
                 Precio = p.Precio,
                 Descripcion = p.Descripcion,
+                Activo = p.Activo
             };
             productosMostar.Add(productoMostrar);
         }
@@ -82,14 +83,14 @@ public class ProductosController : Controller
         return Json(productosPorID.ToList());
     }
 
-            public JsonResult GuardarProducto(
-        int ProductoID,
-        int MarcaID,
-        int SubRubroID,
-        string NombreProducto,
-        string Descripcion,
-        decimal Precio
-        )
+    public JsonResult GuardarProducto(
+    int ProductoID,
+    int MarcaID,
+    int SubRubroID,
+    string NombreProducto,
+    string Descripcion,
+    decimal Precio
+)
     {
         string resultado = "";
         if (ProductoID == 0)
@@ -121,6 +122,7 @@ public class ProductosController : Controller
                 editarProducto.Descripcion = Descripcion;
                 editarProducto.Precio = Precio;
 
+
                 _context.SaveChanges();
 
                 resultado = "El producto se actualizó correctamente";
@@ -129,13 +131,34 @@ public class ProductosController : Controller
         return Json(resultado);
     }
 
-        public JsonResult EliminarProducto(int ProductoID)
+
+    public IActionResult DeshabilitarProducto(int productoID)
     {
-        var producto = _context.Productos.Find(ProductoID);
-        _context.Remove(producto);
+        var producto = _context.Productos.FirstOrDefault(p => p.ProductoID == productoID);
+        if (producto == null)
+        {
+            return Json(new { success = false, message = "Producto no encontrado" });
+        }
+
+        producto.Activo = false; // Cambiamos el estado a deshabilitado
         _context.SaveChanges();
 
-        return Json(true);
+        return Json(new { success = true, message = "Localidad deshabilitada correctamente" });
+    }
+
+
+    public IActionResult HabilitarProducto(int productoID)
+    {
+        var producto = _context.Productos.FirstOrDefault(p => p.ProductoID == productoID);
+        if (producto == null)
+        {
+            return Json(new { success = false, message = "Producto no encontrado" });
+        }
+
+        producto.Activo = true; // Cambiamos el estado a habilitado
+        _context.SaveChanges();
+
+        return Json(new { success = true, message = "Producto habilitado correctamente" });
     }
 
 

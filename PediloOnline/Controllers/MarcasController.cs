@@ -60,14 +60,34 @@ public class MarcasController : Controller
         return Json(resultado);
     }
 
-    public JsonResult EliminarMarca(int marcaID)
+    public IActionResult DeshabilitarMarca(int marcaID)
+{
+    var marca = _context.Marcas.FirstOrDefault(m => m.MarcaID == marcaID);
+    if (marca == null)
     {
-        var eliminarMarca = _context.Marcas.Find(marcaID);
-        _context.Remove(eliminarMarca);
-        _context.SaveChanges();
+        return Json(new { success = false, message = "Marca no encontrada" });
+    }
 
-        return Json(eliminarMarca);
-    } 
+    marca.Activo = false; // Cambiamos el estado a deshabilitado
+    _context.SaveChanges();
+
+    return Json(new { success = true, message = "Marca deshabilitada correctamente" });
+}
+
+
+public IActionResult HabilitarMarca(int marcaID)
+{
+    var marca = _context.Marcas.FirstOrDefault(m => m.MarcaID == marcaID);
+    if (marca == null)
+    {
+        return Json(new { success = false, message = "Marca no encontrada" });
+    }
+
+    marca.Activo = true; // Cambiamos el estado a habilitado
+    _context.SaveChanges();
+
+    return Json(new { success = true, message = "Marca habilitada correctamente" });
+}
 
 
 }

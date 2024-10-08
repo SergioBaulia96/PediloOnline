@@ -78,7 +78,8 @@ public class ClientesController : Controller
                 Domicilio = cliente.Domicilio,
                 Documento = cliente.Documento,
                 Telefono = cliente.Telefono,
-                Email = cliente.Email
+                Email = cliente.Email,
+                Activo = cliente.Activo
             };
             clientesMostrar.Add(clienteMostrar);
         }
@@ -150,12 +151,32 @@ public class ClientesController : Controller
         return Json(resultado);
     }
 
-        public JsonResult EliminarCliente(int ClienteID)
+    public IActionResult DeshabilitarCliente(int clienteID)
+{
+    var cliente = _context.Clientes.FirstOrDefault(c => c.ClienteID == clienteID);
+    if (cliente == null)
     {
-        var cliente = _context.Clientes.Find(ClienteID);
-        _context.Remove(cliente);
-        _context.SaveChanges();
-
-        return Json(true);
+        return Json(new { success = false, message = "Localidad no encontrada" });
     }
+
+    cliente.Activo = false; // Cambiamos el estado a deshabilitado
+    _context.SaveChanges();
+
+    return Json(new { success = true, message = "Cliente deshabilitado correctamente" });
+}
+
+
+public IActionResult HabilitarCliente(int clienteID)
+{
+    var cliente = _context.Clientes.FirstOrDefault(c => c.ClienteID == clienteID);
+    if (cliente == null)
+    {
+        return Json(new { success = false, message = "Cliente no encontrado" });
+    }
+
+    cliente.Activo = true; // Cambiamos el estado a habilitado
+    _context.SaveChanges();
+
+    return Json(new { success = true, message = "Cliente habilitado correctamente" });
+}
 }

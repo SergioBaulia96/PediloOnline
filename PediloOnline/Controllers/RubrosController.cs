@@ -86,25 +86,7 @@ public class RubrosController : Controller
         return Json(resultado);
     }
 
-    public JsonResult EliminarRubro(int rubroID) {
-        string resultado = "";
-        
-        var tieneSubrrubro = _context.SubRubros.Any(r => r.RubroID == rubroID); //si encuentra algun rubro que tiene subrubros asociados devuele true  
-
-        if (tieneSubrrubro != true) { 
-            var eliminarRubro = _context.Rubros.Find(rubroID);
-            _context.Remove(eliminarRubro);
-            _context.SaveChanges();
-            resultado = "1"; //El rubro se elimino correctamente, se envia al js y se muestra el mensaje de eliminado
-        }  else {
-            resultado = "2"; //No se puede eliminar, el rubro tiene subrubros asociados 
-        } 
-
-                 
-    
-
-        return Json(resultado);
-    }
+ 
 
     public JsonResult TraerRubrosModal(int? rubroId)
     {
@@ -117,20 +99,32 @@ public class RubrosController : Controller
         return Json(rubrosPorID.ToList());
     }
 
-
-    public JsonResult Buscar(string buscarRubro) {
-
-         if (string.IsNullOrEmpty(buscarRubro))
-        {
-            return Json(new { results = new List<string>() });
-        }
-
-        var rubros = _context.Rubros
-            .Where(r => r.RubroNombre.Contains(buscarRubro)) // Busca coincidencias en la columna "Nombre"
-            .Select(r => new { r.RubroID, r.RubroNombre })  // Selecciona los campos necesarios
-            .ToList();
-
-        return Json(new { rubros });
-
+public IActionResult DeshabilitarRubro(int rubroID)
+{
+    var rubro = _context.Rubros.FirstOrDefault(r => r.RubroID == rubroID);
+    if (rubro == null)
+    {
+        return Json(new { success = false, message = "Rubro no encontrado" });
     }
+
+    rubro.Activo = false; // Cambiamos el estado a deshabilitado
+    _context.SaveChanges();
+
+    return Json(new { success = true, message = "Rubro deshabilitado correctamente" });
+}
+
+
+public IActionResult HabilitarRubro(int rubroID)
+{
+    var rubro = _context.Rubros.FirstOrDefault(r => r.RubroID == rubroID);
+    if (rubro == null)
+    {
+        return Json(new { success = false, message = "Rubro no encontrado" });
+    }
+
+    rubro.Activo = true; // Cambiamos el estado a habilitado
+    _context.SaveChanges();
+
+    return Json(new { success = true, message = "Rubro habilitado correctamente" });
+}
 }
