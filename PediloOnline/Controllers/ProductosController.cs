@@ -24,17 +24,26 @@ public class ProductosController : Controller
         ViewBag.SubRubroID = selectListItems.OrderBy(t => t.Text).ToList();
 
         var marcas = _context.Marcas.ToList();
+        var buscarMarcas = _context.Marcas.ToList();
+        var buscarSubRubros = _context.SubRubros.ToList();
         var subrubros = _context.SubRubros.ToList();
 
         marcas.Add(new Marca { MarcaID = 0, MarcaNombre = "[MARCAS...]" });
-        ViewBag.MarcaID = new SelectList(marcas.OrderBy(c => c.MarcaNombre), "MarcaID", "MarcaNombre");
+        ViewBag.MarcaID  = new SelectList(marcas.OrderBy(c => c.MarcaNombre), "MarcaID", "MarcaNombre");
+
+        buscarMarcas.Add(new Marca { MarcaID = 0, MarcaNombre = "[MARCAS...]" });
+        ViewBag.BuscarMarcas  = new SelectList(buscarMarcas.OrderBy(c => c.MarcaNombre), "MarcaID", "MarcaNombre");
+
         subrubros.Add(new SubRubro { SubRubroID = 0, SubRubroNombre = "[SUBRUBROS...]" });
         ViewBag.SubRubroID = new SelectList(subrubros.OrderBy(c => c.SubRubroNombre), "SubRubroID", "SubRubroNombre");
+
+        buscarSubRubros.Add(new SubRubro { SubRubroID = 0, SubRubroNombre = "[SUBRUBROS...]" });
+        ViewBag.BuscarSubRubros = new SelectList(buscarSubRubros.OrderBy(c => c.SubRubroNombre), "SubRubroID", "SubRubroNombre");
 
         return View();
     }
 
-    public JsonResult ListadoProductos(int? id)
+        public JsonResult ListadoProductos(int? id, int? buscarMarcas, int? buscarSubRubros)
     {
         List<VistaProductos> productosMostar = new List<VistaProductos>();
 
@@ -43,6 +52,16 @@ public class ProductosController : Controller
         if (id != null)
         {
             productos = productos.Where(t => t.ProductoID == id);
+        }
+
+        if (buscarMarcas != 0)
+        {
+            productos = productos.Where(t => t.MarcaID == buscarMarcas);
+        }
+
+        if (buscarSubRubros != 0)
+        {
+            productos = productos.Where(t => t.SubRubroID == buscarSubRubros);
         }
 
         var marcas = _context.Marcas.ToList();

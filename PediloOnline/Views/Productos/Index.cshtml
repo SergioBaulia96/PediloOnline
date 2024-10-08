@@ -8,6 +8,21 @@
   <h1 class="display-4">Productos</h1>
 </div>
 
+<div>
+  <label for="BuscarMarcas" class="form-label titulo"></label>
+                @Html.DropDownList("BuscarMarcas", null, htmlAttributes: new
+                  {
+                    @class = " form-control input-transparent ",
+                    onchange="ListadoProductos()"
+                  })
+  <label for="BuscarSubRubros" class="form-label titulo"></label>
+                @Html.DropDownList("BuscarSubRubros", null, htmlAttributes: new
+                  {
+                    @class = " form-control input-transparent ",
+                    onchange="ListadoProductos()"
+                  })
+</div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -15,7 +30,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="tituloModal">Nuevo Producto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form>

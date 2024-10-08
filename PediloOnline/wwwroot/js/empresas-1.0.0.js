@@ -61,7 +61,7 @@ function LimpiarModal(){
 function AgregarEmpresa() {
   let empresaID = document.getElementById("empresaID").value;
   let razonSocial = document.getElementById("razonSocial").value;
-  let nombreFantasia = document.getElementById("razonSocial").value;
+  let nombreFantasia = document.getElementById("nombreFantasia").value;
   let domicilio = document.getElementById("domicilio").value;
   let localidad = document.getElementById("LocalidadID").value;
   let documento = document.getElementById("documento").value;

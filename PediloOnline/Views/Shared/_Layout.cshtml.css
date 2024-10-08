@@ -68,8 +68,12 @@ button.accept-policy {
 /* Estilo del contenedor del encabezado de la sidebar */
 .sidebar-header {
   background-color: #5c9cdf; /* Cambia este color al que prefieras */
-  padding: 16px;
   text-align: center;
+  height: 63px;
+}
+
+.sidebar-header:hover{
+  color: #5c9cdf !important;
 }
 
 /* Estilo del título dentro del contenedor del encabezado */
@@ -124,6 +128,7 @@ button.accept-policy {
 .navbar {
   margin-left: 250px;
   transition: margin-left 0.3s, width 0.3s;
+  height: 65px;
 }
 
 .navbar.expanded {

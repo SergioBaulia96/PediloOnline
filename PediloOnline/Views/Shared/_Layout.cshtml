@@ -24,8 +24,10 @@
     <button class="menu-toggle" id="menuToggle">☰</button>
     <div class="sidebar" id="sidebarMenu">
         <div class="sidebar-header">
-            <h4 class="text-white text-center">PediloOnline</h4>
-        </div>
+        <a class="navbar-brand me-auto" asp-area="" asp-controller="Home" asp-action="Index">
+            <img src="~/img/logui.png" alt="" style="height: 35px; width: 150px;"/>
+        </a>
+        </div>|
         <a href="@Url.Action("Index", "Home")"><i class="fa-solid fa-house pe-2"></i>Home</a>
         <a href="@Url.Action("Index", "Productos")"><i class="fa-solid fa-shop pe-2"></i>Productos</a>
         <a href="@Url.Action("Index", "Carrito")"><i class="fa-solid fa-cart-shopping pe-2"></i>Carrito</a>
@@ -108,19 +110,6 @@ else
         </svg>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebarMenu = document.getElementById('sidebarMenu');
-        const mainContent = document.getElementById('mainContent');
-
-        menuToggle.addEventListener('click', function () {
-            sidebarMenu.classList.toggle('sidebar-collapsed');
-            mainContent.classList.toggle('main-content-expanded');
-            mainContent.classList.toggle('main-content-collapsed');
-        });
-    });
-    </script>
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

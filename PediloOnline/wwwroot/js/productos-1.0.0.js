@@ -1,10 +1,14 @@
 window.onload = ListadoProductos();
 
 function ListadoProductos() {
-
+    let buscarMarcas = document.getElementById("BuscarMarcas").value;
+    let buscarSubRubros = document.getElementById("BuscarSubRubros").value;
     $.ajax({
         url: '../../Productos/ListadoProductos',
-        data: {},
+        data: {
+            buscarMarcas: buscarMarcas,
+            buscarSubRubros: buscarSubRubros
+        },
         type: 'POST',
         datatype: 'json',
         success: function (productosMostrar) {
@@ -71,6 +75,7 @@ function NuevoProducto() {
 }
 
 function GuardarProducto() {
+    
     let productoID = document.getElementById("ProductoID").value;
     let marcaID = document.getElementById("MarcaID").value;
     let subRubroID = document.getElementById("SubRubroID").value;
