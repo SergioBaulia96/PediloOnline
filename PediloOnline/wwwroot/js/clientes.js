@@ -13,13 +13,22 @@ function ListadoClientes() {
         success: function (clientesMostrar) {
             $("#clienteModal").modal("hide");
             LimpiarModal();
-            //console.log("Ejecuta funcion limpiar modal")
             let contenidoTabla = ``;
 
             $.each(clientesMostrar, function (index, clienteMostrar) {
+                let deshabilitado = clienteMostrar.activo ? "" : "table-secondary"; // Cambia color si está deshabilitada
+                let boton = clienteMostrar.activo 
+                    ? `<button type="button" class="btn btn-secondary" onclick="DeshabilitarCliente(${clienteMostrar.clienteID}, event)">
+                         <i class="fa-solid fa-ban"></i>
+                       </button>`
+                    : `<button type="button" class="btn btn-primary" onclick="HabilitarCliente(${clienteMostrar.clienteID}, event)">
+                         <i class="fa-solid fa-check"></i> 
+                       </button>`;
+
+                let clickableClass = clienteMostrar.activo ? "clickable-row" : "";
 
                 contenidoTabla += `
-                <tr>
+                <tr class="${deshabilitado} ${clickableClass}" id="fila-${clienteMostrar.clienteID}" data-id="${clienteMostrar.clienteID}">
                     <td>${clienteMostrar.tipoCliente}</td>
                     <td>${clienteMostrar.localidadNombre}</td>
                     <td>${clienteMostrar.nombreCompleto}</td>
@@ -28,20 +37,17 @@ function ListadoClientes() {
                     <td>${clienteMostrar.telefono}</td>
                     <td>${clienteMostrar.email}</td>
                     <td class="text-center">
-                    <button type="button" class="btn btn-success" onclick="AbrirEditarCliente(${clienteMostrar.clienteID})">
-                    Editar
-                    </button>
+                        ${boton}
                     </td>
-                    <td class="text-center">
-                    <button type="button" class="btn btn-danger" onclick="ValidarEliminacion(${clienteMostrar.clienteID})">
-                    Eliminar
-                    </button>
-                    </td>
-                </tr>
-                `;
-
+                </tr>`;
             });
             document.getElementById("tbody-clientes").innerHTML = contenidoTabla;
+
+            // Asigna el evento de clic a las filas clicables
+            $(".clickable-row").click(function() {
+                let clienteID = $(this).data("id"); // Obtiene el ID de la fila
+                AbrirEditarCliente(clienteID); // Llama a la función para abrir el modal
+            });
         },
         error: function (xhr, status) {
             alert('Disculpe, existio un problema al deshabilitar');
@@ -195,46 +201,75 @@ function AbrirEditarCliente(clienteID) {
     });
 }
 
-function EliminarCliente(clienteID) {
-    $.ajax({
-        url: '../../Clientes/EliminarCliente',
-        data: { clienteID: clienteID },
-        type: 'POST',
-        dataType: 'json',
-        success: function (EliminarCliente) {
-            ListadoClientes()
-        },
-        error: function (xhr, status) {
-            console.log('Problemas al eliminar el cliente');
-        }
-    });
-}
 
-function ValidarEliminacion(clienteID) {
-    Swal.fire({
-        title: "¿Desea eliminar el cliente?",
-        showDenyButton: true,
-        showCancelButton: false,
-        confirmButtonText: "Eliminar",
-        denyButtonText: `Cancelar`
-      }).then((result) => {
-        if (result.isConfirmed) {
-            EliminarCliente(clienteID);
-            Swal.fire("Cliente eliminada!", "", "success");
-            
-          
-        } else if (result.isDenied) {
-          Swal.fire("No se elimino ninguna clienete", "", "info");
-        }
-      });
-    /* var elimina = confirm("¿Esta seguro que desea eliminar?");
-    if (elimina == true) {
-        EliminarCliente(clienteID);
-    } */
-}
 
 //funcion que convierte lo que escribo en los input a mayuscula
 function textoMayuscula(texto) {
     texto.value = texto.value.toUpperCase();
+}
+
+function ValidarDeshabilitacion(clienteID) {
+    Swal.fire({
+        title: "¿Desea deshabilitar el cliente?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "Deshabilitar",
+        denyButtonText: `Cancelar`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            DeshabilitarCliente(clienteID);
+            Swal.fire("¡Cliente deshabilitado!", "", "success");
+        } else if (result.isDenied) {
+            Swal.fire("El cliente no fue deshabilitado", "", "info");
+        }
+    });
+}
+
+
+function DeshabilitarCliente(clienteID, event) {
+    event.stopPropagation(); // Detener la propagación del evento de clic a la fila
+    $.ajax({
+        url: '../../Clientes/DeshabilitarCliente',
+        type: 'POST',
+        data: { clienteID: clienteID },
+        success: function(resultado) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Cliente deshabilitado',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            ListadoClientes();
+        },
+        error: function(xhr, status) {
+            alert('Error al deshabilitar el cliente');
+        }
+    });
+}
+
+
+
+function HabilitarCliente(clienteID, event) {
+    event.stopPropagation(); // Detener la propagación del evento de clic a la fila
+    $.ajax({
+        url: '../../Clientes/HabilitarCliente',
+        type: 'POST',
+        data: { clienteID: clienteID },
+        success: function(resultado) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Cliente habilitado',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            // Refrescar la tabla de localidades
+            ListadoClientes();
+        },
+        error: function(xhr, status) {
+            alert('Error al habilitar el cliente');
+        }
+    });
 }
 

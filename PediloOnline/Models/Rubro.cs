@@ -15,6 +15,7 @@ namespace PediloOnline.Models;
         public string RubroNombre { get; set; }
 
         public bool Eliminado { get; set; }
+         public bool Activo { get; set; }
 
          public virtual ICollection<SubRubro> SubRubro { get; set; }
 

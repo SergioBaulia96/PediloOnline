@@ -6,31 +6,41 @@ function ListaSubrubros() {
     data: {},
     type: "POST",
     dataType: "json",
-    success: function (subrubrosMostar) {
+    success: function (subrubrosMostrar) {
       $("#ModalSubRubros").modal("hide");
       LimpiarModal();
       let contenidoTabla = ``;
 
-      $.each(subrubrosMostar, function (index, subrubro) {
+      $.each(subrubrosMostrar, function(index, subrubro) {
+        let deshabilitado = subrubro.activo ? "" : "table-secondary"; // Cambia color si está deshabilitada
+        let boton = subrubro.activo 
+            ? `<button type="button" class="btn btn-secondary" onclick="DeshabilitarSubRubro(${subrubro.subRubroID}, event)">
+                 <i class="fa-solid fa-ban"></i>
+               </button>`
+            : `<button type="button" class="btn btn-primary" onclick="HabilitarSubRubro(${subrubro.subRubroID}, event)">
+                 <i class="fa-solid fa-check"></i> 
+               </button>`;
+
+        let clickableClass = subrubro.activo ? "clickable-row" : "";
+
         contenidoTabla += `
-                <tr>
-                    <td>${subrubro.rubroNombre}</td>
-                    <td>${subrubro.subRubroNombre}</td>
-                    <td class="text-center">
-                    <button type="button" class="btn btn-success" onclick="ModalEditarSubRubros(${subrubro.subRubroID})">
-                    Editar
-                    </button>
-                    </td>
-                    <td class="text-center">
-                    <button type="button" class="btn btn-danger" onclick="ValidarEliminar(${subrubro.subRubroID})">
-                    Eliminar
-                    </button>
-                    </td> 
-                </tr>
-             `;
-      });
+        <tr class="${deshabilitado} ${clickableClass}" id="fila-${subrubro.subRubroID}" data-id="${subrubro.subRubroID}">
+            <td>${subrubro.rubroNombre}</td>
+            <td>${subrubro.subRubroNombre}</td>
+            <td class="text-center">
+                ${boton}
+            </td>
+        </tr>`;
+    });
+
 
       document.getElementById("tbody-subrubro").innerHTML = contenidoTabla;
+
+      // Asigna el evento de clic a las filas clicables
+      $(".clickable-row").click(function() {
+        let subRubroID = $(this).data("id"); // Obtiene el ID de la fila
+        ModalEditarSubRubros(subRubroID); // Llama a la función para abrir el modal
+    });
     },
 
     error: function (xhr, status) {
@@ -124,23 +134,6 @@ function ModalEditarSubRubros(subRubroID){
   });
  } 
 
-function ValidarEliminar(subRubroID) {
-  Swal.fire({
-    title: "¿Desea eliminar el rubro?",
-    showDenyButton: true,
-    showCancelButton: false,
-    confirmButtonText: "Eliminar",
-    denyButtonText: `Cancelar`,
-  }).then((result) => {
-    if (result.isConfirmed) {
-      EliminarSubrubro(subRubroID);
-      Swal.fire("Rubro eliminado!", "", "success");
-    } else if (result.isDenied) {
-      Swal.fire("No se elimino ningun rubro", "", "info");
-    }
-  });
-  
-}
 
 function LimpiarModal() {
   document.getElementById("subRubroID").value = 0;
@@ -150,28 +143,74 @@ function LimpiarModal() {
   document.getElementById("errorMensajeRubro").style.display = "none";
 }
 
-function EliminarSubrubro(subRubroID) {
-  $.ajax({
-    url: "../../Subrubros/EliminarSubrubro",
-    data: {
-      subRubroID: subRubroID,
-    },
-    type: "POST",
-    dataType: "json",
-    success: function (resultado) {
-      ListaSubrubros();
-    },
-    error: function (xhr, status) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "¡Algo salio mal!",
-      });
-    },
-  });
-}
+
 
 //funcion que convierte lo que escribo en los input a mayuscula
 function textoMayuscula(texto) {
   texto.value = texto.value.toUpperCase();
 }
+
+function ValidarDeshabilitacion(subRubroID) {
+  Swal.fire({
+      title: "¿Desea deshabilitar el SubRubro?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Deshabilitar",
+      denyButtonText: `Cancelar`
+  }).then((result) => {
+      if (result.isConfirmed) {
+          DeshabilitarSubRubro(subRubroID);
+          Swal.fire("¡SubRubro deshabilitado!", "", "success");
+      } else if (result.isDenied) {
+          Swal.fire("El SubRubro no fue deshabilitado", "", "info");
+      }
+  });
+}
+
+
+function DeshabilitarSubRubro(subRubroID, event) {
+  event.stopPropagation(); // Detener la propagación del evento de clic a la fila
+  $.ajax({
+      url: '../../SubRubros/DeshabilitarSubRubro',
+      type: 'POST',
+      data: { subRubroID: subRubroID },
+      success: function(resultado) {
+          Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'SubRubro deshabilitado',
+              showConfirmButton: false,
+              timer: 1500
+          });
+          ListaSubrubros();
+      },
+      error: function(xhr, status) {
+          alert('Error al deshabilitar la localidad');
+      }
+  });
+}
+
+
+
+function HabilitarSubRubro(subRubroID, event) {
+  event.stopPropagation(); // Detener la propagación del evento de clic a la fila
+  $.ajax({
+      url: '../../SubRubros/HabilitarSubRubro',
+      type: 'POST',
+      data: { subRubroID: subRubroID },
+      success: function(resultado) {
+          Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'SubRubro habilitado',
+              showConfirmButton: false,
+              timer: 1500
+          });
+          ListaSubrubros();
+      },
+      error: function(xhr, status) {
+          alert('Error al habilitar el SubRubro');
+      }
+  });
+}
+

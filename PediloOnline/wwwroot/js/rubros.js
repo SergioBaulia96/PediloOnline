@@ -13,25 +13,34 @@ function ListadoRubros() {
       LimpiarModal();
       let contenidoTabla = ``;
 
-      $.each(tipoRubro, function (index, rubro) {
-        contenidoTabla += `
-                <tr>
-                    <td>${rubro.rubroNombre}</td>
-                    <td>
-                    <button type="button" class="btn btn-success" onclick="ModalEditarRubros(${rubro.rubroID})">
-                    Editar
-                    </button>
-                    </td>
-                    <td>
-                    <button type="button" class="btn btn-danger" onclick="ValidarEliminar(${rubro.rubroID})">
-                    Eliminar
-                    </button>
-                    </td>
-                </tr>
-            `;
-      });
+      $.each(tipoRubro, function(index, tipoRubro) {
+        let deshabilitado = tipoRubro.activo ? "" : "table-secondary"; // Cambia color si está deshabilitada
+        let boton = tipoRubro.activo 
+            ? `<button type="button" class="btn btn-secondary" onclick="DeshabilitarRubro(${tipoRubro.rubroID}, event)">
+                 <i class="fa-solid fa-ban"></i>
+               </button>`
+            : `<button type="button" class="btn btn-primary" onclick="HabilitarRubro(${tipoRubro.rubroID}, event)">
+                 <i class="fa-solid fa-check"></i> 
+               </button>`;
 
-      document.getElementById("tbody-rubro").innerHTML = contenidoTabla;
+        let clickableClass = tipoRubro.activo ? "clickable-row" : "";
+
+        contenidoTabla += `
+        <tr class="${deshabilitado} ${clickableClass}" id="fila-${tipoRubro.rubroID}" data-id="${tipoRubro.rubroID}">
+            <td>${tipoRubro.rubroNombre}</td>
+            <td class="text-center">
+                ${boton}
+            </td>
+        </tr>`;
+    });
+
+      document.getElementById("tbody-rubros").innerHTML = contenidoTabla;
+
+      // Asigna el evento de clic a las filas clicables
+      $(".clickable-row").click(function() {
+        let rubroID = $(this).data("id"); // Obtiene el ID de la fila
+        ModalEditarRubros(rubroID); // Llama a la función para abrir el modal
+    });
     },
 
     error: function (xhr, status) {
@@ -137,113 +146,72 @@ function LimpiarModal() {
 
 }
 
-function ValidarEliminar(rubroID) {
-  Swal.fire({
-    title: "¿Desea eliminar el rubro?",
-    showDenyButton: true,
-    showCancelButton: false,
-    confirmButtonText: "Eliminar",
-    denyButtonText: `Cancelar`
-  }).then((result) => {
-      if (result.isConfirmed) {
-      EliminarRubro(rubroID);
-      } else if (result.isDenied) {
-      Swal.fire("No se elimino ninguna localidad", "", "info");
-    }
-  });
-  
-
-}
-
-function EliminarRubro(rubroID) {
-  $.ajax({
-    url: "../../Rubros/EliminarRubro",
-    data: {
-      rubroID: rubroID,
-    },
-    type: "POST",
-    dataType: "json",
-    success: function (resultado) {
-      if (resultado == "1") {
-        Swal.fire("El rubro se elimino correctamente", "", "success");
-      } else {
-        Swal.fire("No se puede eliminar, el rubro tiene subrubros asociados", "", "error");
-      }
-      ListadoRubros();
-    },
-    error: function (xhr, status) {
-      console.log("Disculpe, existió un problema al eliminar el rubro");
-    },
-  });
-}
-
-
-//Funcion para hacer busqueda
-$(document).ready(function () {
-  $('#buscarRubro').on('input', function () {
-    var buscarRubro = $(this).val();
-
-    $.ajax({
-      url: '/Rubros/Buscar',
-      type: 'GET',
-      data: { buscarRubro: buscarRubro },
-      success: function (data) {
-
-        var tabla = "";
-
-        data.results.forEach(function (result) {
-          tabla += "<div>" + "<p>" + result.rubroNombre + "</p>" + "</div>";
-
-        });
-        $('#results').html(tabla);
-        console.log(results);
-      },
-      error: function (xhr, status, error) {
-        console.log("Error en la búsqueda: " + error);
-      }
-    });
-  });
-});
-
-
-
-$(document).ready(function () {
-  $('#buscarRubro').on('input', function () {
-    var buscarRubro = $(this).val();
-
-    $.ajax({
-      url: '/Rubros/Buscar',
-      type: 'GET',
-      data: { buscarRubro: buscarRubro },
-      success: function (rubros) {
-
-        var tabla1 = "";
-        $.each(rubros, function (index, rubro) {
-          tabla1 += `
-            <tr>
-                    <td>${rubro.rubroNombre}</td>
-                    <td>
-                    <button type="button" class="btn btn-success" onclick="ModalEditarRubros(${rubro.rubroID})">
-                    Editar
-                    </button>
-                    </td>
-                    <td>
-                    <button type="button" class="btn btn-danger" onclick="ValidarEliminar(${rubro.rubroID})">
-                    Eliminar
-                    </button>
-                    </td>
-                </tr>
-          
-          `
-        });
-        document.getElementById("tbody-rubro1").innerHTML = tabla1;
-
-      }
-    });
-  });
-});
 
 //funcion que convierte lo que escribo en los input a mayuscula
 function textoMayuscula(texto) {
   texto.value = texto.value.toUpperCase();
+}
+
+function ValidarDeshabilitacion(rubroID) {
+  Swal.fire({
+      title: "¿Desea deshabilitar el rubro?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Deshabilitar",
+      denyButtonText: `Cancelar`
+  }).then((result) => {
+      if (result.isConfirmed) {
+          DeshabilitarRubro(rubroID);
+          Swal.fire("¡Rubro deshabilitado!", "", "success");
+      } else if (result.isDenied) {
+          Swal.fire("El rubro no fue deshabilitado", "", "info");
+      }
+  });
+}
+
+
+function DeshabilitarRubro(rubroID, event) {
+  event.stopPropagation(); // Detener la propagación del evento de clic a la fila
+  $.ajax({
+      url: '../../Rubros/DeshabilitarRubro',
+      type: 'POST',
+      data: { rubroID: rubroID },
+      success: function(resultado) {
+          Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Rubro deshabilitado',
+              showConfirmButton: false,
+              timer: 1500
+          });
+          ListadoRubros();
+      },
+      error: function(xhr, status) {
+          alert('Error al deshabilitar el cliente');
+      }
+  });
+}
+
+
+
+function HabilitarRubro(rubroID, event) {
+  event.stopPropagation(); // Detener la propagación del evento de clic a la fila
+  $.ajax({
+      url: '../../Rubros/HabilitarRubro',
+      type: 'POST',
+      data: { rubroID: rubroID },
+      success: function(resultado) {
+          Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Rubro habilitado',
+              showConfirmButton: false,
+              timer: 1500
+          });
+          ListadoRubros();
+      },
+      error: function(xhr, status) {
+          alert('Error al habilitar el rubro');
+      }
+  });
 }

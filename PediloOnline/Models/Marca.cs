@@ -9,6 +9,8 @@ public class Marca
     public int MarcaID { get; set; }
     public string? MarcaNombre { get; set; }
     public bool Eliminado { get; set; }
+     public bool Activo { get; set; }
 
     public virtual ICollection<Producto> Productos { get; set; }
 }
+

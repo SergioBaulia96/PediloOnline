@@ -18,10 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Evento para mostrar/ocultar el submenú de Rubros
-    document.getElementById("rubrosDropdown").addEventListener("click", function (e) {
-        e.preventDefault();
-        var dropdownMenu = document.getElementById("rubrosMenu");
-        dropdownMenu.classList.toggle("open");
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("rubrosDropdown").addEventListener("click", function(e) {
+            e.preventDefault();
+            document.getElementById("rubrosMenu").classList.toggle("open");
+        });
     });
 });
 

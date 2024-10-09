@@ -18,6 +18,7 @@ public class Producto
     public string? Descripcion { get; set; }
     public decimal Precio { get; set; }
     public bool Eliminado { get; set; }
+     public bool Activo { get; set; }
 
     public virtual SubRubro SubRubros { get; set; } 
     public virtual Marca Marcas { get; set;}
@@ -33,7 +34,9 @@ public class VistaProductos
     public decimal Precio { get; set; }
     public string? Descripcion { get; set; }
     public bool? Estado { get; set;}
+     public bool Activo { get; set; }
     public string? SubRubroNombre { get; set; }
     public string? MarcaNombre { get; set; }
+
 
 }

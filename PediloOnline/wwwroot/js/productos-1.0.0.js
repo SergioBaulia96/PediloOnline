@@ -14,33 +14,41 @@ function ListadoProductos() {
         success: function (productosMostrar) {
             $("#productoModal").modal("hide");
             LimpiarModal();
-            //console.log("Ejecuta funcion limpiar modal")
             let contenidoTabla = ``;
 
-            $.each(productosMostrar, function (index, productoMostrar) {
-                let precioFormateado = `$ ${parseFloat(productoMostrar.precio).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-                contenidoTabla += `
-                <tr>
-                    <td>${productoMostrar.nombreProducto}</td>
-                    <td>${productoMostrar.descripcion}</td>
-                    <td>${precioFormateado}</td>
-                    <td>${productoMostrar.subRubroNombre}</td>
-                    <td>${productoMostrar.marcaNombre}</td>
-                    <td class="text-center">
-                    <button type="button" class="btn btn-success" onclick="AbrirEditarProducto(${productoMostrar.productoID})">
-                    Editar
-                    </button>
-                    </td>
-                    <td class="text-center">
-                    <button type="button" class="btn btn-danger" onclick="ValidarEliminacion(${productoMostrar.productoID})">
-                    Eliminar
-                    </button>
-                    </td>
-                </tr>
-                `;
+            $.each(productosMostrar, function(index, producto) {
+                let precioFormateado = `$ ${parseFloat(producto.precio).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                let deshabilitado = producto.activo ? "" : "table-secondary"; // Cambia color si está deshabilitada
+                let boton = producto.activo 
+                    ? `<button type="button" class="btn btn-secondary" onclick="DeshabilitarProducto(${producto.productoID}, event)">
+                         <i class="fa-solid fa-ban"></i>
+                       </button>`
+                    : `<button type="button" class="btn btn-primary" onclick="HabilitarProducto(${producto.productoID}, event)">
+                         <i class="fa-solid fa-check"></i> 
+                       </button>`;
 
+                let clickableClass = producto.activo ? "clickable-row" : "";
+
+                contenidoTabla += `
+                <tr class="${deshabilitado} ${clickableClass}" id="fila-${producto.productoID}" data-id="${producto.productoID}">
+                    <td>${producto.nombreProducto}</td>
+                    <td>${producto.descripcion}</td>
+                    <td>${precioFormateado}</td>
+                    <td>${producto.subRubroNombre}</td>
+                    <td>${producto.marcaNombre}</td>
+                    <td class="text-center">
+                        ${boton}
+                    </td>
+                </tr>`;
             });
             document.getElementById("tbody-productos").innerHTML = contenidoTabla;
+
+             // Asigna el evento de clic a las filas clicables
+             $(".clickable-row").click(function() {
+                let productoID = $(this).data("id"); // Obtiene el ID de la fila
+                AbrirEditarProducto(productoID); // Llama a la función para abrir el modal
+            });
+
         },
         error: function (xhr, status) {
             alert('Disculpe, existio un problema al deshabilitar');
@@ -171,46 +179,73 @@ function AbrirEditarProducto(ProductoID) {
     });
 }
 
-function EliminarProducto(productoID) {
-    $.ajax({
-        url: '../../Productos/EliminarProducto',
-        data: { productoID: productoID },
-        type: 'POST',
-        dataType: 'json',
-        success: function (EliminarProducto) {
-            ListadoProductos()
-        },
-        error: function (xhr, status) {
-            console.log('Problemas al eliminar el producto');
-        }
-    });
-}
-
-function ValidarEliminacion(productoID) {
-    Swal.fire({
-        title: "¿Desea eliminar el producto?",
-        showDenyButton: true,
-        showCancelButton: false,
-        confirmButtonText: "Eliminar",
-        denyButtonText: `Cancelar`
-      }).then((result) => {
-        if (result.isConfirmed) {
-            EliminarProducto(productoID);
-            Swal.fire("producto eliminado!", "", "success");
-            
-          
-        } else if (result.isDenied) {
-          Swal.fire("No se elimino ningun producto", "", "info");
-        }
-      });
-    /* var elimina = confirm("¿Esta seguro que desea eliminar?");
-    if (elimina == true) {
-        EliminarProducto(productoID);
-    } */
-}
 
 //funcion que convierte lo que escribo en los input a mayuscula
 function textoMayuscula(texto) {
     texto.value = texto.value.toUpperCase();
+}
+
+function ValidarDeshabilitacion(productoID) {
+    Swal.fire({
+        title: "¿Desea deshabilitar la localidad?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "Deshabilitar",
+        denyButtonText: `Cancelar`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            DeshabilitarLocalidad(productoID);
+            Swal.fire("¡Producto deshabilitado!", "", "success");
+        } else if (result.isDenied) {
+            Swal.fire("El producto no fue deshabilitado", "", "info");
+        }
+    });
+}
+
+
+function DeshabilitarProducto(productoID, event) {
+    event.stopPropagation(); // Detener la propagación del evento de clic a la fila
+    $.ajax({
+        url: '../../Productos/DeshabilitarProducto',
+        type: 'POST',
+        data: { productoID: productoID },
+        success: function(resultado) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Producto deshabilitado',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            // Refrescar la tabla de localidades
+            ListadoProductos();
+        },
+        error: function(xhr, status) {
+            alert('Error al deshabilitar el producto');
+        }
+    });
+}
+
+function HabilitarProducto(productoID, event) {
+    event.stopPropagation(); // Detener la propagación del evento de clic a la fila
+    $.ajax({
+        url: '../../Productos/HabilitarProducto',
+        type: 'POST',
+        data: { productoID: productoID },
+        success: function(resultado) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Producto habilitado',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            // Refrescar la tabla de localidades
+            ListadoProductos();
+        },
+        error: function(xhr, status) {
+            alert('Error al habilitar el producto');
+        }
+    });
 }
 

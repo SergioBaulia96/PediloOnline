@@ -50,6 +50,7 @@ public class SubrubrosController : Controller
                 RubroID = subrubro.RubroID,
                 RubroNombre = rubro.RubroNombre,
                 SubRubroNombre = subrubro.SubRubroNombre,
+                Activo = subrubro.Activo
 
 
             };
@@ -136,6 +137,35 @@ public class SubrubrosController : Controller
 
         return Json(true);
     }
+
+    public IActionResult DeshabilitarSubRubro(int subRubroID)
+{
+    var subrubro = _context.SubRubros.FirstOrDefault(s => s.SubRubroID == subRubroID);
+    if (subrubro == null)
+    {
+        return Json(new { success = false, message = "SubRubro no encontrado" });
+    }
+
+    subrubro.Activo = false; // Cambiamos el estado a deshabilitado
+    _context.SaveChanges();
+
+    return Json(new { success = true, message = "SubRubro deshabilitado correctamente" });
+}
+
+
+public IActionResult HabilitarSubRubro(int subRubroID)
+{
+    var subrubro = _context.SubRubros.FirstOrDefault(s => s.SubRubroID == subRubroID);
+    if (subrubro == null)
+    {
+        return Json(new { success = false, message = "SubRubro no encontrado" });
+    }
+
+    subrubro.Activo = true; // Cambiamos el estado a habilitado
+    _context.SaveChanges();
+
+    return Json(new { success = true, message = "SubRubro habilitado correctamente" });
+}
 
     
 }
