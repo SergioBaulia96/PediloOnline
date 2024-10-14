@@ -127,4 +127,17 @@ public IActionResult HabilitarRubro(int rubroID)
 
     return Json(new { success = true, message = "Rubro habilitado correctamente" });
 }
+
+public JsonResult Buscar(string buscarRubro)
+{
+    var rubrosFiltrados = _context.Rubros
+        .Where(r => r.RubroNombre.Contains(buscarRubro))
+        .Select(r => new {
+            r.RubroID,
+            r.RubroNombre
+        })
+        .ToList();
+
+    return Json(rubrosFiltrados);
+}
 }

@@ -215,3 +215,89 @@ function HabilitarRubro(rubroID, event) {
       }
   });
 }
+
+//funcio buscar rubro
+/* $(document).ready(function () {
+  
+  $('#buscarRubro').on('input', function () {
+    var buscarRubro = $(this).val(); // Obtiene el valor del input
+    if (buscarRubro === '') {
+      ListadoRubros(); 
+      return; 
+    }
+    $.ajax({
+      url: '/Rubros/Buscar', 
+      type: 'GET',
+      data: { buscarRubro: buscarRubro }, 
+      success: function (rubros) {
+        
+        var tabla = '';
+        $.each(rubros, function (index, rubro) {
+          tabla += `
+            <tr>
+              <td>${rubro.rubroNombre}</td>
+              <td>
+                <button type="button" class="btn btn-success" onclick="ModalEditarRubros(${rubro.rubroID})">
+                  Editar
+                </button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger" onclick="ValidarEliminar(${rubro.rubroID})">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+        $('#tbody-rubros').html(tabla);
+      },
+      error: function (xhr, status, error) {
+        console.log("Error en la búsqueda: " + error);
+      }
+    });
+  });
+});
+ */
+$(document).ready(function () {
+  
+  $('#buscarRubro').on('input', function () {
+    var buscarRubro = $(this).val(); // Obtiene el valor del input
+    if (buscarRubro === '') {
+      ListadoRubros(); 
+      return; 
+    }
+    $.ajax({
+      url: '/Rubros/Buscar', 
+      type: 'GET',
+      data: { buscarRubro: buscarRubro }, 
+      success: function (rubros) {
+        
+        var tabla = '';
+        $.each(rubros, function (index, rubro) {
+          let deshabilitado = rubro.activo ? "" : "table-secondary"; // Cambia color si está deshabilitada
+          let boton = rubro.activo 
+            ? `<button type="button" class="btn btn-secondary" onclick="DeshabilitarRubro(${rubro.rubroID}, event)">
+                 <i class="fa-solid fa-ban"></i>
+               </button>`
+            : `<button type="button" class="btn btn-primary" onclick="HabilitarRubro(${rubro.rubroID}, event)">
+                 <i class="fa-solid fa-check"></i> 
+               </button>`;
+
+        let clickableClass = rubro.activo ? "clickable-row" : "";
+
+        tabla += `
+        <tr class="${deshabilitado} ${clickableClass}" id="fila-${rubro.rubroID}" data-id="${rubro.rubroID}">
+            <td>${rubro.rubroNombre}</td>
+            <td class="text-center">
+                ${boton}
+            </td>
+        </tr>`;
+        });
+        $('#tbody-rubros').html(tabla);
+      },
+      error: function (xhr, status, error) {
+        console.log("Error en la búsqueda: " + error);
+      }
+    });
+  });
+});

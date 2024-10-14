@@ -30,8 +30,7 @@ namespace PediloOnline.Models;
         public int EmpresaID { get; set; }
 
          public virtual Cliente Cliente { get; set; }
-
-         public virtual ICollection<DetalleVenta> DetalleVentas { get; set; }
+        public virtual ICollection<DetalleVenta> DetalleVentas { get; set; }
          
     }
 

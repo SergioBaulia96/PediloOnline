@@ -1,0 +1,122 @@
+@{
+  ViewData["Title"] = "Vendedores";
+}
+
+<link rel="stylesheet" href="~/css/clientes.css" asp-append-version="true" />
+
+<div class="text-center">
+    <h1 class="display-4">Vendedores</h1>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="vendedorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModal">Nuevo Cliente</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="VendedorID" value="0">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="NombreCompleto" class="form-label">Nombre Completo</label>
+                            <input type="text" id="NombreCompleto" class="form-control" oninput="textoMayuscula(this)">
+                            <!--llama a la funcion que convierte lo que escribo en los input a mayuscula-->
+                            <span id="errorMensajeNombre"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un nombre
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="Domicilio" class="form-label">Domicilio</label>
+                            <input type="text" id="Domicilio" class="form-control" oninput="textoMayuscula(this)">
+                            <span id="errorMensajeDomicilio"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un domicilio
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="LocalidadID" class="form-label">Localidad</label>
+                            @Html.DropDownList("LocalidadID", null, htmlAttributes: new { @class = "form-control" })
+                            <span id="errorMensajeLocalidad"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe seleccionar una localidad
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        
+                        
+                        <div class="col-md-12">
+                            <label for="Email" class="form-label">Email</label>
+                            <input type="text" id="Email" class="form-control" oninput="textoMayuscula(this)">
+                            <span id="errorMensajeEmail"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un email
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="Documento" class="form-label">Documento</label>
+                            <input type="text" id="Documento" class="form-control">
+                            <span id="errorMensajeDocumento"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un numero de documento
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Telefono" class="form-label">Telefono</label>
+                            <input type="text" id="Telefono" class="form-control">
+                            <span id="errorMensajeTelefono"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe ingresar un numero de telefono
+                            </span>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn-ovalo ancho-boton" data-bs-dismiss="modal"
+                    onclick="LimpiarModal()">Cerrar</button>
+                <button type="button" class="btn-ovalo ancho-boton" onclick="GuardarVendedor()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-light table-hover">
+    <thead>
+        <tr>
+            <th>Nombre Completo</th>
+            <th>Domicilio</th>
+            <th>Localidad</th>
+            <th>Documento</th>
+            <th>Telefono</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tbody-vendedores"></tbody>
+</table>
+
+<!--Boton para agregar nuevo cliente-->
+<div class="d-flex justify-content-end align-items-center bd-highlight mb-2 fixed-bottom div-boton ">
+    <div class="p-2 bd-highlight d-flex ">
+        <button type="submit" class="btn btn-primary mt-3 botoncliente" data-bs-toggle="modal"
+            data-bs-target="#vendedorModal"><i class="fa-solid fa-plus">add</i>
+        </button>
+    </div>
+</div>
+
+@section Scripts {
+  <script src="~/js/vendedores-1.0.0.js"></script>
+}
