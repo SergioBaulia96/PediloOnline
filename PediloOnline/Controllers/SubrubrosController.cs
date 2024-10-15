@@ -138,7 +138,7 @@ public class SubrubrosController : Controller
         return Json(true);
     }
 
-    public IActionResult DeshabilitarSubRubro(int subRubroID)
+   public IActionResult DeshabilitarSubRubro(int subRubroID)
 {
     var subrubro = _context.SubRubros.FirstOrDefault(s => s.SubRubroID == subRubroID);
     if (subrubro == null)
@@ -146,11 +146,19 @@ public class SubrubrosController : Controller
         return Json(new { success = false, message = "SubRubro no encontrado" });
     }
 
+    // Verificamos si el subrubro tiene un rubro asociado
+    var rubroAsociado = _context.Rubros.Any(r => r.RubroID == subrubro.RubroID);
+    if (rubroAsociado)
+    {
+        return Json(new { success = false, message = "No se puede deshabilitar el subrubro porque está asociado a un rubro" });
+    }
+
     subrubro.Activo = false; // Cambiamos el estado a deshabilitado
     _context.SaveChanges();
 
     return Json(new { success = true, message = "SubRubro deshabilitado correctamente" });
 }
+
 
 
 public IActionResult HabilitarSubRubro(int subRubroID)

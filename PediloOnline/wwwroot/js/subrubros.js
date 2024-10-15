@@ -175,20 +175,29 @@ function DeshabilitarSubRubro(subRubroID, event) {
       type: 'POST',
       data: { subRubroID: subRubroID },
       success: function(resultado) {
-          Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'SubRubro deshabilitado',
-              showConfirmButton: false,
-              timer: 1500
-          });
+          if (resultado.success) {
+              Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: resultado.message,
+                  showConfirmButton: false,
+                  timer: 1500
+              });
+          } else {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'No se pudo deshabilitar',
+                  text: resultado.message
+              });
+          }
           ListaSubrubros();
       },
       error: function(xhr, status) {
-          alert('Error al deshabilitar la localidad');
+          alert('Error al deshabilitar el subrubro');
       }
   });
 }
+
 
 
 

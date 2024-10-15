@@ -177,19 +177,27 @@ function DeshabilitarRubro(rubroID, event) {
       type: 'POST',
       data: { rubroID: rubroID },
       success: function(resultado) {
+        if (resultado.success) {
           Swal.fire({
               position: 'center',
               icon: 'success',
-              title: 'Rubro deshabilitado',
+              title: resultado.message,
               showConfirmButton: false,
               timer: 1500
           });
-          ListadoRubros();
-      },
-      error: function(xhr, status) {
-          alert('Error al deshabilitar el cliente');
+      } else {
+          Swal.fire({
+              icon: 'error',
+              title: 'No se pudo deshabilitar',
+              text: resultado.message
+          });
       }
-  });
+      ListadoRubros();
+  },
+  error: function(xhr, status) {
+      alert('Error al deshabilitar el rubro');
+  }
+});
 }
 
 

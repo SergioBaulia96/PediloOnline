@@ -107,6 +107,13 @@ public IActionResult DeshabilitarRubro(int rubroID)
         return Json(new { success = false, message = "Rubro no encontrado" });
     }
 
+     // Verificamos si el subrubro tiene un rubro asociado
+    var subRubroAsociado = _context.SubRubros.Any(s => s.SubRubroID == rubro.RubroID);
+    if (subRubroAsociado)
+    {
+        return Json(new { success = false, message = "No se puede deshabilitar el rubro porque está asociado a un subrubro" });
+    }
+
     rubro.Activo = false; // Cambiamos el estado a deshabilitado
     _context.SaveChanges();
 
