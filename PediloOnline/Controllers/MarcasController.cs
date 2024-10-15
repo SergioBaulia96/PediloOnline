@@ -40,6 +40,7 @@ public class MarcasController : Controller
             var nuevaMarca = new Marca
             {
                 MarcaNombre = marcaNombre,
+                Activo = true
             };
             _context.Add(nuevaMarca);
             _context.SaveChanges();

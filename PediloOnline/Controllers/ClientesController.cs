@@ -115,7 +115,8 @@ public class ClientesController : Controller
                     Domicilio = Domicilio,
                     Documento = Documento,
                     Telefono = Telefono,
-                    Email = Email
+                    Email = Email,
+                    Activo = true
                 };
                 _context.Add(Cliente);
                 _context.SaveChanges();

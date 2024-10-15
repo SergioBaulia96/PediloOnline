@@ -53,7 +53,8 @@ public class RubrosController : Controller
                     //4- GUARDAR EL TIPO DE EJERCICIO
                     var tipoRubro = new Rubro
                     {
-                        RubroNombre = rubroNombre
+                        RubroNombre = rubroNombre,
+                        Activo = true
                     };
                     _context.Add(tipoRubro);
                     _context.SaveChanges();

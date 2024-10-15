@@ -122,7 +122,8 @@ public class ProductosController : Controller
                     SubRubroID = SubRubroID,
                     NombreProducto = NombreProducto,
                     Descripcion = Descripcion,
-                    Precio = Precio
+                    Precio = Precio,
+                    Activo = true
                 };
                 _context.Add(Producto);
                 _context.SaveChanges();

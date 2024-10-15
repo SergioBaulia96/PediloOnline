@@ -101,7 +101,8 @@ public class VendedoresController : Controller
                     Domicilio = Domicilio,
                     Documento = Documento,
                     Telefono = Telefono,
-                    Email = Email
+                    Email = Email,
+                    Activo = true
                 };
                 _context.Add(Vendedor);
                 _context.SaveChanges();
@@ -157,7 +158,7 @@ public JsonResult TraerVendedoresAlModal(int? vendedorID)
     var vendedor = _context.Vendedores.FirstOrDefault(c => c.VendedorID == vendedorID);
     if (vendedor == null)
     {
-        return Json(new { success = false, message = "Localidad no encontrada" });
+        return Json(new { success = false, message = "Vendedor no encontrado" });
     }
 
     vendedor.Activo = false; // Cambiamos el estado a deshabilitado

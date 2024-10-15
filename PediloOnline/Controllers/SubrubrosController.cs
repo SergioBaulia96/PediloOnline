@@ -83,7 +83,8 @@ public class SubrubrosController : Controller
                     {
                         RubroID = RubroID,
                         SubRubroID = subRubroID,
-                        SubRubroNombre = subrubroNombre
+                        SubRubroNombre = subrubroNombre,
+                        Activo = true
                     };
                     _context.Add(tiposubRubro);
                     _context.SaveChanges();

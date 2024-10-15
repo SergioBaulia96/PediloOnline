@@ -52,7 +52,7 @@ public class LocalidadesController : Controller
             Nombre = localidad.LocalidadNombre,
             CodigoPostal = localidad.CodigoPostal,
             NombreProvincia = provincia.ProvinciaNombre,
-            Activo = localidad.Activo // Asegúrate de que el estado activo se envía correctamente
+            Activo = localidad.Activo 
         };
 
         LocalidadesMostar.Add(localidadMostar);
@@ -77,7 +77,8 @@ public class LocalidadesController : Controller
             {
                 LocalidadNombre = Nombre,
                 CodigoPostal = CodigoPostal,
-                ProvinciaID = ProvinciaID
+                ProvinciaID = ProvinciaID,
+                Activo = true
             };
             _context.Add(localidad);
             _context.SaveChanges();
