@@ -175,6 +175,20 @@ public IActionResult HabilitarSubRubro(int subRubroID)
     return Json(new { success = true, message = "SubRubro habilitado correctamente" });
 }
 
+//Filtro subrubro
+public JsonResult Buscar(string subRubroNombre)
+{
+    var subRubrosFiltrados = _context.SubRubros
+        .Where(r => r.SubRubroNombre.Contains(subRubroNombre))
+        .Select(r => new {
+            r.SubRubroID,
+            r.SubRubroNombre
+        })
+        .ToList();
+
+    return Json(subRubrosFiltrados);
+}
+
     
 }
 

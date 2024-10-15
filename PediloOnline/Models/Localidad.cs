@@ -25,6 +25,7 @@ namespace PediloOnline.Models;
          public virtual ICollection<Cliente> Clientes { get; set; }
 
          public virtual ICollection<Empresa> Empresas { get; set; }
+         public virtual ICollection<Vendedor> Vendedores { get; set; }
 
     }
 

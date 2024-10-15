@@ -223,3 +223,54 @@ function HabilitarSubRubro(subRubroID, event) {
   });
 }
 
+
+//funcion buscar subrubros
+$(document).ready(function () {
+  // Captura el evento de escribir en el input de búsqueda
+  $('#subRubroBuscar').on('input', function () {
+    var buscarsubRubro = $(this).val(); // Obtiene el valor del input
+
+    if (buscarsubRubro === '') {
+      ListaSubrubros(); // Llama a la función que carga todos los rubros
+      return; // Detiene la ejecución aquí, no se hace búsqueda
+    }
+
+    // Hacer una solicitud AJAX para buscar los rubros filtrados
+    $.ajax({
+      url: '/Subrubros/Buscar', // Acción del controlador que realiza la búsqueda
+      type: 'GET',
+      data: { buscarsubRubro: buscarsubRubro }, // Enviar el término de búsqueda al servidor
+      success: function (subRubrosFiltrados) {
+        // Variable para construir la tabla con los resultados filtrados
+        var tabla = '';
+        $.each(subRubrosFiltrados, function (index, subRubro) {
+          tabla += `
+            <tr>
+              <td>${subRubro.rubroNombre}</td>
+              <td>${subRubro.subRubroNombre}</td>
+              
+              <td>
+                <button type="button" class="btn btn-success" onclick="ModalEditarRubros(${subRubro.subRubroID})">
+                  Editar
+                </button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger" onclick="ValidarEliminar(${subRubro.subRubroID})">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+
+        // Actualizar el contenido del cuerpo de la tabla
+        $('#tbody-subrubro').html(tabla);
+      },
+      error: function (xhr, status, error) {
+        console.log("Error en la búsqueda: " + error);
+      }
+    });
+  });
+});
+
+

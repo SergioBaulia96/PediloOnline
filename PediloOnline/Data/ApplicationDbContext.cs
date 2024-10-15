@@ -23,5 +23,6 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Venta> Ventas { get; set; }
     public DbSet<DetalleVenta> DetalleVentas { get; set; }
     public DbSet<Marca> Marcas { get; set; }
+    public DbSet<Vendedor> Vendedores {get; set;}
 
 }

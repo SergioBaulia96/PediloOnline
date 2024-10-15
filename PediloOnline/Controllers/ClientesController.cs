@@ -99,15 +99,7 @@ public class ClientesController : Controller
         return Json(clientesPorID.ToList());
     }
 
-        public JsonResult GuardarCliente(
-        int ClienteID,
-        TipoCliente TipoCliente,
-        int LocalidadID,
-        string NombreCompleto,
-        string Domicilio,
-        string Documento,
-        string Telefono,
-        string Email
+    public JsonResult GuardarCliente(int ClienteID,TipoCliente TipoCliente,int LocalidadID,string NombreCompleto,string Domicilio,string Documento,string Telefono,string Email
         )
     {
         string resultado = "";
