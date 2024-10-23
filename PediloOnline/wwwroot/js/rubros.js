@@ -114,29 +114,29 @@ function CargarRubro() {
 
 //recien agregado editar rubro
 function ModalEditarRubros(rubroID){
-   
- $.ajax({
-     url: '../../Rubros/TraerRubrosModal',
-     data: { 
-       rubroId: rubroID,
-     },
-     type: 'POST',
-     dataType: 'json',
-     success: function (rubrosPorID) { 
-         let rubro = rubrosPorID[0];
 
-         document.getElementById("rubroID").value = rubroID;
-         $("#tituloRubros").text("Editar Rubro");
-         document.getElementById("rubroNombre").value = rubro.rubroNombre;
-         
+  $.ajax({
+    url: '../../Rubros/TraerRubrosModal',
+    data: {
+      rubroId: rubroID,
+    },
+    type: 'POST',
+    dataType: 'json',
+    success: function (rubrosPorID) {
+      let rubro = rubrosPorID[0];
 
-         $("#ModalRubros").modal("show");
-     },
+      document.getElementById("rubroID").value = rubroID;
+      $("#tituloRubros").text("Editar Rubro");
+      document.getElementById("rubroNombre").value = rubro.rubroNombre;
 
-     error: function (xhr, status) {
-         console.log('Disculpe, existió un problema al consultar el registro para ser modificado.');
-     }
- });
+
+      $("#ModalRubros").modal("show");
+    },
+
+    error: function (xhr, status) {
+      console.log('Disculpe, existió un problema al consultar el registro para ser modificado.');
+    }
+  });
 } 
 
 function LimpiarModal() {
@@ -285,11 +285,11 @@ $(document).ready(function () {
           let deshabilitado = rubro.activo ? "" : "table-secondary"; // Cambia color si está deshabilitada
           let boton = rubro.activo 
             ? `<button type="button" class="btn btn-secondary" onclick="DeshabilitarRubro(${rubro.rubroID}, event)">
-                 <i class="fa-solid fa-ban"></i>
-               </button>`
+                <i class="fa-solid fa-ban"></i>
+              </button>`
             : `<button type="button" class="btn btn-primary" onclick="HabilitarRubro(${rubro.rubroID}, event)">
-                 <i class="fa-solid fa-check"></i> 
-               </button>`;
+                <i class="fa-solid fa-check"></i> 
+              </button>`;
 
         let clickableClass = rubro.activo ? "clickable-row" : "";
 

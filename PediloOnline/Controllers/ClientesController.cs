@@ -25,7 +25,7 @@ public class ClientesController : Controller
         };
 
         var enumValues = Enum.GetValues(typeof(TipoCliente)).Cast<TipoCliente>();
-        
+
         selectListItems.AddRange(enumValues.Select(e => new SelectListItem
         {
             Value = e.GetHashCode().ToString(),
@@ -39,7 +39,7 @@ public class ClientesController : Controller
 
         localidades.Add(new Localidad { LocalidadID = 0, LocalidadNombre = "[SELECCIONE...]" });
         ViewBag.LocalidadID = new SelectList(localidades.OrderBy(c => c.LocalidadNombre), "LocalidadID", "LocalidadNombre");
-        
+
         localidadesBuscar.Add(new Localidad { LocalidadID = 0, LocalidadNombre = "[SELECCIONE...]" });
         ViewBag.BuscarLocalidad = new SelectList(localidadesBuscar.OrderBy(c => c.LocalidadNombre), "LocalidadID", "LocalidadNombre");
 
@@ -88,7 +88,7 @@ public class ClientesController : Controller
         return Json(clientesMostrar);
     }
 
-     public JsonResult TraerClientesAlModal(int? ClienteID)
+    public JsonResult TraerClientesAlModal(int? ClienteID)
     {
         var clientesPorID = _context.Clientes.ToList();
         if (ClienteID != null)
@@ -99,7 +99,7 @@ public class ClientesController : Controller
         return Json(clientesPorID.ToList());
     }
 
-    public JsonResult GuardarCliente(int ClienteID,TipoCliente TipoCliente,int LocalidadID,string NombreCompleto,string Domicilio,string Documento,string Telefono,string Email
+    public JsonResult GuardarCliente(int ClienteID, TipoCliente TipoCliente, int LocalidadID, string NombreCompleto, string Domicilio, string Documento, string Telefono, string Email
         )
     {
         string resultado = "";
@@ -145,31 +145,31 @@ public class ClientesController : Controller
     }
 
     public IActionResult DeshabilitarCliente(int clienteID)
-{
-    var cliente = _context.Clientes.FirstOrDefault(c => c.ClienteID == clienteID);
-    if (cliente == null)
     {
-        return Json(new { success = false, message = "Localidad no encontrada" });
+        var cliente = _context.Clientes.FirstOrDefault(c => c.ClienteID == clienteID);
+        if (cliente == null)
+        {
+            return Json(new { success = false, message = "Localidad no encontrada" });
+        }
+
+        cliente.Activo = false; // Cambiamos el estado a deshabilitado
+        _context.SaveChanges();
+
+        return Json(new { success = true, message = "Cliente deshabilitado correctamente" });
     }
 
-    cliente.Activo = false; // Cambiamos el estado a deshabilitado
-    _context.SaveChanges();
 
-    return Json(new { success = true, message = "Cliente deshabilitado correctamente" });
-}
-
-
-public IActionResult HabilitarCliente(int clienteID)
-{
-    var cliente = _context.Clientes.FirstOrDefault(c => c.ClienteID == clienteID);
-    if (cliente == null)
+    public IActionResult HabilitarCliente(int clienteID)
     {
-        return Json(new { success = false, message = "Cliente no encontrado" });
+        var cliente = _context.Clientes.FirstOrDefault(c => c.ClienteID == clienteID);
+        if (cliente == null)
+        {
+            return Json(new { success = false, message = "Cliente no encontrado" });
+        }
+
+        cliente.Activo = true; // Cambiamos el estado a habilitado
+        _context.SaveChanges();
+
+        return Json(new { success = true, message = "Cliente habilitado correctamente" });
     }
-
-    cliente.Activo = true; // Cambiamos el estado a habilitado
-    _context.SaveChanges();
-
-    return Json(new { success = true, message = "Cliente habilitado correctamente" });
-}
 }

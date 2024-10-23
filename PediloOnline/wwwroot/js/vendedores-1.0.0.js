@@ -17,13 +17,13 @@ function ListadoVendedores() {
 
             $.each(vendedoresMostrar, function (index, vendedorMostrar) {
                 let deshabilitado = vendedorMostrar.activo ? "" : "table-secondary"; // Cambia color si está deshabilitada
-                let boton = vendedorMostrar.activo 
-                    ? `<button type="button" class="btn btn-secondary" onclick="DeshabilitarVendedor(${vendedorMostrar.vendedorID}, event)">
-                         <i class="fa-solid fa-ban"></i>
-                       </button>`
-                    : `<button type="button" class="btn btn-primary" onclick="HabilitarVendedor(${vendedorMostrar.vendedorID}, event)">
-                         <i class="fa-solid fa-check"></i> 
-                       </button>`;
+                let boton = vendedorMostrar.activo
+                        ? `<button type="button" class="btn btn-secondary" onclick="DeshabilitarVendedor(${vendedorMostrar.vendedorID}, event)">
+                            <i class="fa-solid fa-ban"></i>
+                        </button>`
+                        : `<button type="button" class="btn btn-primary" onclick="HabilitarVendedor(${vendedorMostrar.vendedorID}, event)">
+                            <i class="fa-solid fa-check"></i> 
+                        </button>`;
 
                 let clickableClass = vendedorMostrar.activo ? "clickable-row" : "";
 
@@ -43,7 +43,7 @@ function ListadoVendedores() {
             document.getElementById("tbody-vendedores").innerHTML = contenidoTabla;
 
             // Asigna el evento de clic a las filas clicables
-            $(".clickable-row").click(function() {
+            $(".clickable-row").click(function () {
                 let vendedorID = $(this).data("id"); // Obtiene el ID de la fila
                 AbrirEditarVendedor(vendedorID); // Llama a la función para abrir el modal
             });
@@ -128,7 +128,7 @@ function GuardarVendedor() {
 
     if (!isValid) {
         return;  // Detener la ejecución aquí si isValid es false
-      }
+    }
 
 
     $.ajax({
@@ -145,8 +145,8 @@ function GuardarVendedor() {
                 title: resultado,
                 showConfirmButton: false,
                 timer: 1500
-              });
-              ListadoVendedores();
+            });
+            ListadoVendedores();
         },
         error: function (xhr, status) {
             console.log('Disculpe, existió un problema al guardar el cliente');
@@ -165,7 +165,7 @@ function AbrirEditarVendedor(vendedorID) {
 
             document.getElementById("VendedorID").value = vendedorID;
             $("#tituloModal").text("Editar Vendedor");
-                document.getElementById("LocalidadID").value = vendedor.localidadID,
+            document.getElementById("LocalidadID").value = vendedor.localidadID,
                 document.getElementById("NombreCompleto").value = vendedor.nombreCompleto,
                 document.getElementById("Domicilio").value = vendedor.domicilio,
                 document.getElementById("Documento").value = vendedor.documento,
@@ -189,7 +189,7 @@ function HabilitarVendedor(vendedorID, event) {
         url: '../../Vendedores/HabilitarVendedor',
         type: 'POST',
         data: { vendedorID: vendedorID },
-        success: function(resultado) {
+        success: function (resultado) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -200,7 +200,7 @@ function HabilitarVendedor(vendedorID, event) {
             // Refrescar la tabla de localidades
             ListadoVendedores();
         },
-        error: function(xhr, status) {
+        error: function (xhr, status) {
             alert('Error al habilitar el Vendedor');
         }
     });
@@ -213,7 +213,7 @@ function DeshabilitarVendedor(vendedorID, event) {
         url: '../../Vendedores/DeshabilitarVendedor',
         type: 'POST',
         data: { vendedorID: vendedorID },
-        success: function(resultado) {
+        success: function (resultado) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -223,7 +223,7 @@ function DeshabilitarVendedor(vendedorID, event) {
             });
             ListadoVendedores();
         },
-        error: function(xhr, status) {
+        error: function (xhr, status) {
             alert('Error al deshabilitar el vendedor');
         }
     });
