@@ -12,7 +12,7 @@ namespace PediloOnline.Models;
         [Key]
         public int DetalleCarritoID { get; set; }
 
-        public int UsuarioID { get; set; }
+        public int VendedorID { get; set; }
 
         public int ProductoID { get; set; }
 
