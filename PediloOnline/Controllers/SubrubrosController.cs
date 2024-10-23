@@ -190,7 +190,7 @@ public JsonResult Buscar(string subRubroNombre)
     return Json(subRubrosFiltrados);
 }
 
-    
+
 }
 
 

@@ -1,0 +1,57 @@
+@{
+  ViewData["Title"] = "Carrito";
+}
+
+<link rel="stylesheet" href="~/css/carrito.css" asp-append-version="true" />
+
+<div class="text-center">
+    <h1 class="display-4">Nueva Venta</h1>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ventaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+                    <input type="hidden" id="CarritoID" value="0">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="ClienteID" class="form-label">Cliente</label>
+                            @Html.DropDownList("ClienteID", null, htmlAttributes: new { @class = "form-control" })
+                            <span id="errorMensajeCliente"
+                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
+                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe seleccionar una Cliente
+                            </span>
+                        </div>
+                    </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Boton para agregar nuevo cliente-->
+<div class="d-flex justify-content-end align-items-center bd-highlight mb-2 fixed-bottom div-boton ">
+    <div class="p-2 bd-highlight d-flex ">
+        <button type="submit" class="btn btn-primary mt-3 botoncarrito" data-bs-toggle="modal"
+            data-bs-target="#ventaModal"><i class="fa-solid fa-plus">add</i>
+        </button>
+    </div>
+</div>
+
+@section Scripts {
+  <script src="~/js/carritos-1.0.0.js"></script>
+}
