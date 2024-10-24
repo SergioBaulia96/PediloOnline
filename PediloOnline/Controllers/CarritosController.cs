@@ -37,4 +37,28 @@ public class CarritosController : Controller
         return View();
     }
 
+     // Método para inicializar la vista de Nueva Venta
+        public IActionResult Carrito()
+        {
+            // Código para cargar los select de TipoProducto, Producto y Cliente
+            var rubros = _context.Rubros.ToList();
+            rubros.Add(new Rubro { RubroID = 0, RubroNombre = "[SELECCIONE EL RUBBRO DEL PRODUCTO]" });
+            ViewBag.RubroID = new SelectList(rubros.OrderBy(c => c.RubroNombre), "RubroID", "RubroNombre");
+
+            var productos = _context.Productos.ToList();
+            productos.Add(new Producto { ProductoID = 0, NombreProducto = "[SELECCIONE UN PRODUCTO]" });
+            ViewBag.ProductoID = new SelectList(productos.OrderBy(c => c.NombreProducto), "ProductoID", "NombreProducto");
+
+            var clientes = _context.Clientes.ToList();
+            clientes.Add(new Cliente { ClienteID = 0, NombreCompleto = "[SELECCIONE CLIENTE]" });
+            var listadoClientes = clientes.Select(c => new
+            {
+                c.ClienteID,
+                NombreCompleto = c.NombreCompleto
+            });
+            ViewBag.ClienteID = new SelectList(listadoClientes.OrderBy(c => c.NombreCompleto), "ClienteID", "NombreCompleto");
+
+            return View();
+        }
+
 }

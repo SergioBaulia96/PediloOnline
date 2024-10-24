@@ -2,51 +2,97 @@
   ViewData["Title"] = "Carrito";
 }
 
-<link rel="stylesheet" href="~/css/carrito.css" asp-append-version="true" />
+@* <link rel="stylesheet" href="~/css/carrito.css" asp-append-version="true" /> *@
 
 <div class="text-center">
-    <h1 class="display-4">Nueva Venta</h1>
+  <h1 class="display-4">Nueva Venta</h1>
 </div>
 
+<form id="formVentaTemporal">
+  <input type="hidden" id="VentaID" value="0" />
+  <input type="hidden" id="VendedorID" value="@User.Identity?.Name" />
 
-
-<!-- Modal -->
-<div class="modal fade" id="ventaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <!-- Sección 1: Cliente y Fecha (no se ocultan) -->
+  <div id="form-section-1">
+    <div class="row">
+      <!-- Cliente -->
+      <div class="mb-2 col-md-4">
+        <label for="ClienteID" class="form-label fw-bold">Cliente</label>
+        <div class="input-group">
+          @Html.DropDownList("ClienteID", null, new
+            {
+              @class = "form-control",
+              @id = "ClienteID"
+            })
+        </div>
       </div>
-      <div class="modal-body">
-        <form>
-                    <input type="hidden" id="CarritoID" value="0">
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="ClienteID" class="form-label">Cliente</label>
-                            @Html.DropDownList("ClienteID", null, htmlAttributes: new { @class = "form-control" })
-                            <span id="errorMensajeCliente"
-                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
-                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe seleccionar una Cliente
-                            </span>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="VendedorID" class="form-label">Vendedor</label>
-                            @Html.DropDownList("VendedorID", null, htmlAttributes: new { @class = "form-control" })
-                            <span id="errorMensajeCliente"
-                                style="color:red; display:none; font-size: 15px; padding-left: 4px;">
-                                <i class="fa-solid fa-circle-exclamation pe-1"></i>Debe seleccionar una Cliente
-                            </span>
-                        </div>
-                    </div>
-        </form>
+      <!-- Fecha y Botón Continuar en la misma fila -->
+      <div class="mb-2 col-md-4 d-flex align-items-end">
+        <div class="w-100">
+          <label for="fecha" class="form-label fw-bold">Fecha</label>
+          <input type="date" id="fecha" name="fecha" class="form-control">
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
-        <button type="button" class="btn btn-primary">GUARDAR</button>
+    </div>
+  </div>
+
+  <!-- Sección 2: Inputs adicionales (se muestran al dar clic) -->
+  <div id="form-section-2" style="display: none;">
+    <hr class="mb-3">
+    <div class="row">
+      <!-- Tipo de Producto -->
+      <div class="mb-2 col-md-4">
+        <label for="RubroID" class="form-label fw-bold">Rubro Del Producto</label>
+        <div class="input-group">
+          @Html.DropDownList("RubroID", null, new
+            {
+              @class = "form-control",
+              @id = "RubroID"
+            })
+        </div>
       </div>
+      <!-- Producto -->
+      <div class="mb-2 col-md-4">
+        <label for="ProductoID" class="form-label fw-bold">Producto</label>
+        <div class="input-group">
+          @Html.DropDownList("ProductoID", null, new
+            {
+              @class = "form-control",
+              @id = "ProductoID"
+            })
+        </div>
+      </div>
+      <!-- Cantidad -->
+      <div class="mb-2 col-md-2">
+        <label for="Cantidad" class="form-label fw-bold">Cantidad</label>
+        <input type="number" class="form-control" id="Cantidad" min="1" value="1">
+      </div>
+      <!-- Botón Agregar -->
+      <div class="mb-2 col-md-2 d-flex align-items-end">
+        <button type="button" class="btn btn-primary" onclick="AgregarProducto()">Agregar</button>
+      </div>
+    </div>
+    <hr class="mb-3">
+    <!-- Tabla de Productos -->
+    <h5>Productos Vendidos</h5>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th class="text-end"></th>
+          </tr>
+        </thead>
+        <tbody id="Tabla-Detalle">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>
+</div>
     </div>
   </div>
 </div>
@@ -54,11 +100,11 @@
 
 <!--Boton para agregar nuevo cliente-->
 <div class="d-flex justify-content-end align-items-center bd-highlight mb-2 fixed-bottom div-boton ">
-    <div class="p-2 bd-highlight d-flex ">
-        <button type="submit" class="btn btn-primary mt-3 botoncarrito" data-bs-toggle="modal"
-            data-bs-target="#ventaModal"><i class="fa-solid fa-plus">add</i>
-        </button>
-    </div>
+  <div class="p-2 bd-highlight d-flex ">
+    <button type="submit" class="btn btn-primary mt-3 botoncarrito" data-bs-toggle="modal"
+      data-bs-target="#ventaModal"><i class="fa-solid fa-plus">add</i>
+    </button>
+  </div>
 </div>
 
 @section Scripts {

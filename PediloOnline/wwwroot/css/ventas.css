@@ -1,4 +1,4 @@
-.botonventas  {
+.botonventa  {
     width: 70px;
     height: 70px;
     border-radius: 50%;
@@ -14,7 +14,7 @@
     right: 20px;
   }
 
-/*   .btn-ovalo {
+   .btn-ovalo {
     cursor: pointer;
     display: inline-flex;
     justify-content: center;
@@ -26,4 +26,4 @@
     font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
-  } */
+  } 

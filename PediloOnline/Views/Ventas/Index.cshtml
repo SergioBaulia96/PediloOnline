@@ -2,3 +2,31 @@
   ViewData["Title"] = "Ventas";
 }
 
+<link rel="stylesheet" href="~/css/ventas.css" asp-append-version="true" />
+
+<div class="text-center">
+    <h1 class="display-4">Ventas</h1>
+</div>
+
+<table class="table table-light table-hover">
+    <thead>
+        <tr>
+            <th>Tipo Cliente</th>
+            <th>Localidad</th>
+            <th>Nombre Completo</th>
+            <th>Domicilio</th>
+            <th>Documento</th>
+            <th>Telefono</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody id="tbody-Ventas"></tbody>
+</table>
+
+<div class="d-flex justify-content-end align-items-center bd-highlight mb-2 fixed-bottom div-boton">
+    <div class="p-2 bd-highlight d-flex">
+        <button type="button" class="btn btn-primary mt-3 botonventa" onclick="window.location.href='/Carritos'">
+            <i class="fa-solid fa-plus">add</i>
+        </button>
+    </div>
+</div>
