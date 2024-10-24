@@ -23,11 +23,16 @@ public class CarritosController : Controller
             new SelectListItem { Value = "0", Text = "[SELECCIONE...]"}
         };
 
-        ViewBag.ClienteID = selectListItems.OrderBy(t => t.Text).ToList();
+        /* ViewBag.ClienteID = selectListItems.OrderBy(t => t.Text).ToList(); */
 
         var clientes = _context.Clientes.ToList();
+        var vendedores = _context.Vendedores.ToList();
+
         clientes.Add(new Cliente { ClienteID = 0, NombreCompleto = "[SELECCIONE...]" });
         ViewBag.ClienteID = new SelectList(clientes.OrderBy(c => c.NombreCompleto), "ClienteID", "NombreCompleto");
+
+        vendedores.Add(new Vendedor { VendedorID = 0, NombreCompleto = "[SELECCIONE...]" });
+        ViewBag.VendedorID = new SelectList(vendedores.OrderBy(c => c.NombreCompleto), "VendedorID", "NombreCompleto");
 
         return View();
     }
